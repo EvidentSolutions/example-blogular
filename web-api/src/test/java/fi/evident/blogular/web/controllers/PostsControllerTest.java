@@ -3,6 +3,7 @@ package fi.evident.blogular.web.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fi.evident.blogular.core.dao.BlogPostDao;
 import fi.evident.blogular.core.model.BlogPost;
+import fi.evident.blogular.core.model.NewPostData;
 import fi.evident.dalesbred.Database;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
@@ -53,8 +54,8 @@ public class PostsControllerTest {
 
     @Test
     public void listBlogPosts() throws Exception {
-        postDao.savePost(postWithSlug("hello-world"));
-        postDao.savePost(postWithSlug("goodbye-world"));
+        postDao.savePost("hello-world", postWithTitle("Hello, world!"));
+        postDao.savePost("goodbye-world", postWithTitle("Goodbye!"));
 
         mvc.perform(get("/api/posts"))
                 .andExpect(status().isOk())
@@ -64,7 +65,7 @@ public class PostsControllerTest {
 
     @Test
     public void postBlogPost() throws Exception {
-        String json = objectMapper.writeValueAsString(postWithSlug("my-test-post"));
+        String json = objectMapper.writeValueAsString(postWithTitle("My test post"));
 
         mvc.perform(post("/api/posts").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isCreated())
@@ -72,16 +73,18 @@ public class PostsControllerTest {
 
         List<BlogPost> posts = postDao.findAllPosts();
         assertThat(posts.size(), is(1));
+        assertThat(posts.get(0).title, is("My test post"));
         assertThat(posts.get(0).slug, is("my-test-post"));
     }
 
     @Test
     public void getPostBySlug() throws Exception {
-        postDao.savePost(postWithSlug("my-test-post"));
+        postDao.savePost("my-test-post", postWithTitle("Title of test"));
 
         mvc.perform(get("/api/posts/my-test-post"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.slug").value("my-test-post"));
+                .andExpect(jsonPath("$.slug").value("my-test-post"))
+                .andExpect(jsonPath("$.title").value("Title of test"));
     }
 
     @Test
@@ -92,7 +95,7 @@ public class PostsControllerTest {
 
     @Test
     public void deletePostBySlug() throws Exception {
-        postDao.savePost(postWithSlug("my-test-post"));
+        postDao.savePost("my-test-post", postWithTitle("Title of the post"));
 
         mvc.perform(delete("/api/posts/my-test-post"))
                 .andExpect(status().isOk());
@@ -101,9 +104,10 @@ public class PostsControllerTest {
     }
 
     @NotNull
-    private static BlogPost postWithSlug(@NotNull String slug) {
-        BlogPost post = new BlogPost();
-        post.slug = slug;
+    private static NewPostData postWithTitle(@NotNull String title) {
+        NewPostData post = new NewPostData();
+        post.title = title;
+        post.body = "Body for post " + title;
         return post;
     }
 }

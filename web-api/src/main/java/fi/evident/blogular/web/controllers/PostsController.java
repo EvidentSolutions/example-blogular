@@ -2,6 +2,8 @@ package fi.evident.blogular.web.controllers;
 
 import fi.evident.blogular.core.dao.BlogPostDao;
 import fi.evident.blogular.core.model.BlogPost;
+import fi.evident.blogular.core.model.NewPostData;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,11 +26,12 @@ public class PostsController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> postBlogPost(@RequestBody BlogPost post) {
-        blogPostDao.savePost(post);
+    public ResponseEntity<?> postBlogPost(@RequestBody NewPostData post) {
+        String slug = createSlug(post.title);
+        blogPostDao.savePost(slug, post);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(URI.create("/api/posts/" + post.slug));
+        headers.setLocation(URI.create("/api/posts/" + slug));
         return new ResponseEntity<Object>(headers, HttpStatus.CREATED);
     }
 
@@ -40,5 +43,10 @@ public class PostsController {
     @RequestMapping(value = "/{slug}", method = RequestMethod.DELETE)
     public void deletePostBySlog(@PathVariable String slug) {
         blogPostDao.deleteBySlug(slug);
+    }
+
+    @NotNull
+    private static String createSlug(@NotNull String title) {
+        return title.replaceAll("\\s", "-").replaceAll("[^a-zA-Z-]+", "").toLowerCase();
     }
 }
