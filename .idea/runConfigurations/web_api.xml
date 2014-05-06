@@ -3,7 +3,7 @@
     <option name="COMMON_VM_ARGUMENTS" value="-Dspring.profiles.active=development" />
     <option name="UPDATING_POLICY" value="restart-server" />
     <deployment>
-      <artifact name="Gradle : visualisti:web-api : web-api.war (exploded)">
+      <artifact name="Gradle : blogular:web-api : web-api.war (exploded)">
         <settings>
           <option name="CONTEXT_PATH" value="/" />
         </settings>
@@ -71,7 +71,9 @@
       </SHUTDOWN>
     </ConfigurationWrapper>
     <method>
-      <option name="BuildArtifacts" enabled="true" />
+      <option name="BuildArtifacts" enabled="true">
+        <artifact name="Gradle : blogular:web-api : web-api.war (exploded)" />
+      </option>
     </method>
   </configuration>
 </component>
