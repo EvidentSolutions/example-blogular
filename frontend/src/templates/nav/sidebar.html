@@ -1,0 +1,19 @@
+<div ng-controller="SidebarController">
+    <div class="sidebar-module sidebar-module-inset">
+        <h4>About</h4>
+
+        <div ng-bind-html="sidebar.about"></div>
+    </div>
+    <div class="sidebar-module">
+        <h4>Archives</h4>
+        <ol class="list-unstyled">
+            <li ng-repeat="l in sidebar.archiveLinks"><a href="#">{{l | date:'MM. yyyy'}}</a></li>
+        </ol>
+    </div>
+    <div class="sidebar-module">
+        <h4>Elsewhere</h4>
+        <ol class="list-unstyled fa-ul">
+            <li ng-repeat="l in sidebar.externalLinks"><a href="{{l.href}}"><i class="fa fa-li fa-{{l.icon}}"></i> {{l.title}}</a></li>
+        </ol>
+    </div>
+</div>

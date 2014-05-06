@@ -41,3 +41,8 @@ dependencies {
         compile.exclude module: 'commons-logging'
     }
 }
+
+war {
+    from webAppDir
+    from project(':frontend').tasks.gulpBuild
+}

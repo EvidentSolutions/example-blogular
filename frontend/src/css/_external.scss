@@ -1,0 +1,11 @@
+// Style rules to support external components
+
+// Cloaking for AngularJS
+[ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important
+}
+
+// Proper pointer behaviour for Angular-UI
+.nav, .pagination, .carousel, .panel-title a {
+  cursor: pointer;
+}

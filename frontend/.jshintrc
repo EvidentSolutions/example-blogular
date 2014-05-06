@@ -1,0 +1,9 @@
+{
+    "browser": true,
+    "globalstrict": true,
+    "esnext": true,
+
+    "predef": [
+        "require", "module", "exports", "confirm"
+    ]
+}

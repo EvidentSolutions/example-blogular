@@ -1,0 +1,50 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.moowork.gradle:gradle-node-plugin:0.5'
+    }
+}
+
+apply plugin: 'base'
+apply plugin: 'node'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+task gulpBuild(type: NodeTask, dependsOn: 'npmInstall') {
+    inputs.dir 'src'
+    inputs.files 'gulpfile.js', 'bower.json', 'package.json'
+    outputs.dir 'build/gulp/optimized'
+
+    script = file('node_modules/.bin/gulp')
+    args = ['build-production']
+}
+
+task gulpServe(type: NodeTask, dependsOn: 'npmInstall') {
+    script = file('node_modules/.bin/gulp')
+    args = ['default']
+}
+
+task deleteNodeModules(type: Delete) {
+    delete 'node_modules'
+}
+
+clean.dependsOn deleteNodeModules
+
+task build {
+    dependsOn gulpBuild
+}
+
+task serve {
+    dependsOn gulpServe
+}
+
+node {
+    version = '0.10.26'
+    download = true
+}
