@@ -4,3 +4,15 @@
 form.saving {
   cursor: progress;
 }
+
+.blog-main {
+  overflow: hidden;
+
+  div[ng-view] {
+
+    &.ng-enter {
+      -webkit-animation: slideInRight 0.3s;
+      animation: slideInRight 0.3s;
+    }
+  }
+}

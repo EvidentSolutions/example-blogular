@@ -39,7 +39,8 @@ var paths = {
     vendor: {
         stylesheets: [
             './build/bower_components/bootstrap/dist/css/bootstrap.min.css',
-            './build/bower_components/font-awesome/css/font-awesome.min.css'
+            './build/bower_components/font-awesome/css/font-awesome.min.css',
+            './build/bower_components/animate.css/animate.min.css'
         ],
         fonts: [
             './build/bower_components/bootstrap/dist/fonts/*',
