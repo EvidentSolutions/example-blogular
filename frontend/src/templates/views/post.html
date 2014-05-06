@@ -1,22 +1,27 @@
-<form class="form-horizontal" name="postForm" id="postForm" role="form" novalidate>
+<h2>New Post</h2>
 
-    <h2>New Post</h2>
+<form class="form-horizontal" name="postForm" id="postForm" role="form" novalidate ng-if="!saving">
 
     <div class="form-group">
         <div class="col-sm-12">
-            <input type="text" class="form-control" id="inputPostTitle" ng-model="newPost.title" autofocus required placeholder="Title">
+            <input type="text" class="form-control" id="inputPostTitle" ng-model="newPost.title" autofocus required placeholder="Title" ng-disabled="saving">
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-sm-12">
-            <textarea id="inputPostText" class="form-control" ng-model="newPost.text" required cols="30" rows="10" placeholder="Contents of the post"></textarea>
+            <textarea id="inputPostText" class="form-control" ng-model="newPost.body" required cols="30" rows="10" placeholder="Contents of the post" ng-disabled="saving"></textarea>
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-sm-12">
-            <button ng-disabled="postForm.$invalid" class="btn btn-primary" ng-click="savePost()">Post</button>
+            <button ng-disabled="saving || postForm.$invalid" class="btn btn-primary" ng-click="savePost()">Post</button>
         </div>
     </div>
 </form>
+
+<div ng-if="saving">
+    <p>Publishing your post...</p>
+    <progress ng-if="saving"></progress>
+</div>

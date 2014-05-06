@@ -1,2 +1,6 @@
 @import 'external';
 @import 'blog';
+
+form.saving {
+  cursor: progress;
+}
