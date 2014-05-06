@@ -6,8 +6,10 @@
     </div>
     <div class="sidebar-module">
         <h4>Archives</h4>
+
+        <progress ng-if="sidebar.archivePosts == null"></progress>
         <ol class="list-unstyled">
-            <li ng-repeat="l in sidebar.archiveLinks"><a href="#">{{l | date:'MM. yyyy'}}</a></li>
+            <li ng-repeat="l in sidebar.archivePosts"><a href="/posts/{{l.slug}}">{{l.publishTime | date:'dd.MM.yyyy'}} - {{l.title}}</a></li>
         </ol>
     </div>
     <div class="sidebar-module">

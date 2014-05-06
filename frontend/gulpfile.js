@@ -89,7 +89,7 @@ gulp.task('serve', ['watch'], function() {
 
     http.createServer(app).listen(config.port);
 
-    app.get(/^\/(post)(\/.*)?$/, function(req, res) {
+    app.get(/^\/(post|posts)(\/.*)?$/, function(req, res) {
         res.sendfile(path.join(paths.build.dest, 'index.html'));
     });
 

@@ -2,6 +2,6 @@
 
 module.exports = require('angular').module('blogular.controllers', []);
 
-require('./main-controller');
+require('./list-posts-controller');
 require('./post-controller');
 require('./sidebar-controller');
