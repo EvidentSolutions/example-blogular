@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDataSourceStorage">
+    <option name="dataSources">
+      <list>
+        <State>
+          <option name="id" value="53ae975e-2c26-4468-bf48-e072ff7720dc" />
+          <option name="name" value="Blogular Schema" />
+          <option name="urls">
+            <array>
+              <option value="file://$PROJECT_DIR$/web-api/src/main/resources/db/migration/V1__Initial.sql" />
+            </array>
+          </option>
+        </State>
+      </list>
+    </option>
+  </component>
+</project>
+

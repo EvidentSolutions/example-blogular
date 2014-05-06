@@ -1,0 +1,43 @@
+apply plugin: 'java'
+apply plugin: 'war'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    springVersion = '4.0.3.RELEASE'
+}
+
+dependencies {
+    compile "org.springframework:spring-webmvc:$springVersion"
+    compile "org.springframework:spring-tx:$springVersion"
+    compile "org.springframework:spring-jdbc:$springVersion"
+    compile "org.springframework:spring-context-support:$springVersion"
+    compile "org.springframework:spring-websocket:$springVersion"
+    compile "org.springframework:spring-messaging:$springVersion"
+
+    compile "com.fasterxml.jackson.core:jackson-databind:2.3.3"
+    compile "fi.evident.dalesbred:dalesbred:0.6.0"
+    compile "org.flywaydb:flyway-core:3.0"
+    compile "org.jetbrains:annotations:13.0"
+
+    compile "org.slf4j:slf4j-api:1.7.7"
+    runtime "org.slf4j:jcl-over-slf4j:1.7.7"
+    runtime "ch.qos.logback:logback-classic:1.1.2"
+
+    runtime "org.hsqldb:hsqldb:2.3.2"
+
+    providedCompile "javax.servlet:javax.servlet-api:3.0.1"
+
+    testCompile "junit:junit:4.11"
+    testCompile "org.springframework:spring-test:$springVersion"
+    testCompile "com.jayway.jsonpath:json-path:0.9.1"
+
+    configurations {
+        compile.exclude module: 'commons-logging'
+    }
+}
