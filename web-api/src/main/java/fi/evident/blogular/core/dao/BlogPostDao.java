@@ -15,18 +15,18 @@ public class BlogPostDao {
     @Autowired
     private Database db;
 
-    public void savePost(@NotNull String slug, @NotNull NewPostData post) {
-        db.update("INSERT INTO blog_post (slug, title, body) VALUES (?, ?, ?)", slug, post.title, post.body);
+    public void savePost(@NotNull String slug, @NotNull String author, @NotNull NewPostData post) {
+        db.update("INSERT INTO blog_post (slug, author, title, body) VALUES (?, ?, ?, ?)", slug, author, post.title, post.body);
     }
 
     @NotNull
     public List<BlogPost> findAllPosts() {
-        return db.findAll(BlogPost.class, "SELECT slug, title, publish_time, body FROM blog_post ORDER BY id DESC");
+        return db.findAll(BlogPost.class, "SELECT slug, title, author, publish_time, body FROM blog_post ORDER BY publish_time desc, id desc");
     }
 
     @NotNull
     public BlogPost findBySlug(@NotNull String slug) {
-        return db.findUnique(BlogPost.class, "SELECT slug, title, publish_time, body FROM blog_post WHERE slug = ?", slug);
+        return db.findUnique(BlogPost.class, "SELECT slug, title, author, publish_time, body FROM blog_post WHERE slug = ?", slug);
     }
 
     public void deleteBySlug(@NotNull String slug) {

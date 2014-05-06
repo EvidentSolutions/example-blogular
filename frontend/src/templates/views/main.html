@@ -1,12 +1,21 @@
 <progress ng-if="!posts"></progress>
-<div class="blog-post" ng-repeat="post in posts">
-    <h2 class="blog-post-title">{{post.title}}</h2>
-    <p class="blog-post-meta">{{post.date | date}} by <a href="#">{{post.author}}</a></p>
+<div ng-if="posts != null">
+    <div class="blog-post" ng-repeat="post in posts">
+        <h2 class="blog-post-title">{{post.title}}</h2>
 
-    <div ng-bind-html="post.body"></div>
+        <p class="blog-post-meta">{{post.publishTime | date}} by {{post.author}}</p>
+
+        <div ng-bind-html="post.body"></div>
+    </div>
+
+    <p ng-if="posts.length == 0">
+        No posts. <a href="/post">Write a new one.</a>
+    </p>
+
+    <!--
+    <ul class="pager">
+        <li><a href="#">Previous</a></li>
+        <li><a href="#">Next</a></li>
+    </ul>
+    -->
 </div>
-
-<ul class="pager">
-    <li><a href="#">Previous</a></li>
-    <li><a href="#">Next</a></li>
-</ul>

@@ -13,6 +13,9 @@ public final class BlogPost {
     public String title;
 
     @NotNull
+    public String author;
+
+    @NotNull
     public LocalDateTime publishTime;
 
     @NotNull

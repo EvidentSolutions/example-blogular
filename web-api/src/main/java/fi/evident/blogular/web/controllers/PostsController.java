@@ -28,7 +28,7 @@ public class PostsController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> postBlogPost(@RequestBody NewPostData post) {
         String slug = createSlug(post.title);
-        blogPostDao.savePost(slug, post);
+        blogPostDao.savePost(slug, "J. Random Hacker", post);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create("/api/posts/" + slug));

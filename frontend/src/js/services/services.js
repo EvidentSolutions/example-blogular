@@ -1,6 +1,6 @@
 "use strict";
 
-var services = require('angular').module('visualisti.services', []);
+var services = require('angular').module('blogular.services', []);
 
 require('./post-service');
 

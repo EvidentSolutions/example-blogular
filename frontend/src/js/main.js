@@ -6,6 +6,7 @@ var angular = require('angular');
 
 require('angular-route');
 require('angular-sanitize');
+require('angular-resource');
 require('angular-i18n/angular-locale_fi');
 require('bootstrap');
 require('angular-bootstrap/ui-bootstrap-tpls');
@@ -14,6 +15,7 @@ require('templates');
 var app = angular.module('blogular', [
     'ngRoute',
     'ngSanitize',
+    'ngResource',
     'ui.bootstrap.modal',
     'ui.bootstrap.tabs',
     'ui.bootstrap.dropdownToggle',
