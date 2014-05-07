@@ -17,9 +17,10 @@ require('angular/i18n/angular-locale_fi');
 require('bootstrap');
 require('angular-bootstrap/ui-bootstrap-tpls');
 
-require('templates');
 
-var app = angular.module('blogular', [
+var config = require('./config');
+
+var angularModules = [
     'ngRoute',
     'ngSanitize',
     'ngResource',
@@ -28,12 +29,18 @@ var app = angular.module('blogular', [
     'ui.bootstrap.tabs',
     'ui.bootstrap.dropdownToggle',
     'ui.bootstrap.tpls',
-    'blogular.templates',
     require('./controllers/controllers').name,
     require('./directives/directives').name,
     require('./filters/filters').name,
     require('./services/services').name
-]);
+];
+
+if (config.useTemplateCache) {
+    require('templates');
+    angularModules.push('blogular.templates');
+}
+
+var app = angular.module('blogular', angularModules);
 
 app.config(['$locationProvider', '$routeProvider', ($locationProvider, $routeProvider) => {
     $locationProvider.html5Mode(true);

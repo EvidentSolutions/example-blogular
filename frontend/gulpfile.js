@@ -62,7 +62,8 @@ var handleErrors = function() {
 
 gulp.task('browserify', ['compile-angular-templates'], function () {
     var env = {
-        API_BASE: config.production ? '/api' : 'http://localhost:8080/api'
+        API_BASE: config.production ? '/api' : 'http://localhost:8080/api',
+        USE_TEMPLATE_CACHE: config.production
     };
 
     var bundleStream = browserify()
@@ -87,9 +88,11 @@ gulp.task('serve', ['watch'], function() {
 
     app.use(morgan('dev'));
     app.use(express.static(paths.build.dest));
+    app.use(express.static('./src'));
 
     http.createServer(app).listen(config.port);
 
+    //noinspection JSCheckFunctionSignatures
     app.get(/^\/(post|posts)(\/.*)?$/, function(req, res) {
         //noinspection JSCheckFunctionSignatures
         res.sendfile(path.join(paths.build.dest, 'index.html'));
@@ -97,7 +100,7 @@ gulp.task('serve', ['watch'], function() {
 
     /** @type Object */
     var lrServer = livereload();
-    gulp.watch(path.join(paths.build.dest, '**')).on('change', function(file) {
+    gulp.watch([path.join(paths.build.dest, '**'), './src/**']).on('change', function(file) {
         lrServer.changed(file.path);
     });
 });
@@ -150,9 +153,8 @@ gulp.task('fonts', function() {
 gulp.task('styles', ['sass', 'vendor-css', 'fonts']);
 
 gulp.task('watch', ['build'], function() {
-    gulp.watch(['./src/js/**/*.js', './build/gulp/tmp/templates.js'], ['browserify']);
+    gulp.watch(['./src/js/**/*.js'], ['browserify']);
     gulp.watch(paths.sass, ['sass']);
-    gulp.watch(paths.templates, ['compile-angular-templates']);
     gulp.watch(paths.views, ['compile-views']);
 });
 
