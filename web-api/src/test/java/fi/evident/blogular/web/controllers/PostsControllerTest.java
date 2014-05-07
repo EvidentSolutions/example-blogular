@@ -19,6 +19,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
+import static fi.evident.blogular.testutils.Matchers.aboutCurrentLocalDateTime;
+import static fi.evident.blogular.testutils.Matchers.localDateTimeStringFor;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -63,7 +65,7 @@ public class PostsControllerTest {
 
     @Test
     public void postBlogPost() throws Exception {
-        String json = objectMapper.writeValueAsString(postWithTitle("My test post"));
+        String json = objectMapper.writeValueAsString(postWithTitleAndBody("My test post", "My post body"));
 
         mvc.perform(post("/api/posts").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isCreated())
@@ -71,18 +73,26 @@ public class PostsControllerTest {
 
         List<BlogPost> posts = postDao.findAllPosts();
         assertThat(posts.size(), is(1));
-        assertThat(posts.get(0).title, is("My test post"));
-        assertThat(posts.get(0).slug, is("my-test-post"));
+
+        BlogPost post = posts.get(0);
+        assertThat(post.title, is("My test post"));
+        assertThat(post.slug, is("my-test-post"));
+        assertThat(post.author, is("J. Random Hacker"));
+        assertThat(post.body, is("My post body"));
+        assertThat(post.publishTime, is(aboutCurrentLocalDateTime()));
     }
 
     @Test
     public void getPostBySlug() throws Exception {
-        postDao.savePost("my-test-post", "user", postWithTitle("Title of test"));
+        postDao.savePost("my-test-post", "My Author", postWithTitleAndBody("Title of test", "My body"));
 
         mvc.perform(get("/api/posts/my-test-post"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.slug").value("my-test-post"))
-                .andExpect(jsonPath("$.title").value("Title of test"));
+                .andExpect(jsonPath("$.title").value("Title of test"))
+                .andExpect(jsonPath("$.author").value("My Author"))
+                .andExpect(jsonPath("$.body").value("My body"))
+                .andExpect(jsonPath("$.publishTime").value(is(localDateTimeStringFor(aboutCurrentLocalDateTime()))));
     }
 
     @Test
@@ -103,9 +113,14 @@ public class PostsControllerTest {
 
     @NotNull
     private static NewPostData postWithTitle(@NotNull String title) {
+        return postWithTitleAndBody(title, "Body for post " + title);
+    }
+
+    @NotNull
+    private static NewPostData postWithTitleAndBody(@NotNull String title, @NotNull String body) {
         NewPostData post = new NewPostData();
         post.title = title;
-        post.body = "Body for post " + title;
+        post.body = body;
         return post;
     }
 }
