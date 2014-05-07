@@ -1,2 +1,3 @@
-<progress ng-if="post == null"></progress>
+<progress ng-if="post == null && error == null"></progress>
 <blog-post post="post" ng-if="post != null"></blog-post>
+<div class="alert alert-warning" ng-if="error != null">{{error}}</div>
