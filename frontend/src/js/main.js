@@ -1,16 +1,22 @@
 "use strict";
 
-window._ = require('lodash');
-window.jQuery = require('jquery');
-var angular = require('angular');
+// This is the main entry point of our application. First we'll load some libraries.
 
-require('angular-route');
-require('angular-sanitize');
-require('angular-resource');
-require('angular-animate');
-require('angular-i18n/angular-locale_fi');
+// We'll need to load jQuery into global variable or Bootstrap and Angular won't find it.
+window.jQuery = require('jquery');
+
+// Next, load all angular components. These will set up some global variables as well.
+var angular = require('angular');
+require('angular/route');
+require('angular/sanitize');
+require('angular/resource');
+require('angular/animate');
+require('angular/i18n/angular-locale_fi');
+
+// Bootstrap and AngularJS integration for it
 require('bootstrap');
 require('angular-bootstrap/ui-bootstrap-tpls');
+
 require('templates');
 
 var app = angular.module('blogular', [
