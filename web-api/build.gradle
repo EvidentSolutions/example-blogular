@@ -1,5 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'war'
+apply plugin: 'tomcat'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -10,6 +11,7 @@ repositories {
 
 ext {
     springVersion = '4.0.3.RELEASE'
+    tomcatVersion = '7.0.53'
 }
 
 dependencies {
@@ -37,12 +39,33 @@ dependencies {
     testCompile "org.springframework:spring-test:$springVersion"
     testCompile "com.jayway.jsonpath:json-path:0.9.1"
 
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:$tomcatVersion"
+    tomcat "org.apache.tomcat.embed:tomcat-embed-logging-juli:$tomcatVersion"
+    tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:$tomcatVersion") {
+        exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
+    }
+
     configurations {
         compile.exclude module: 'commons-logging'
     }
 }
 
+tomcatRun {
+    contextPath = '/'
+    configFile = file("$projectDir/etc/development-context.xml")
+}
+
 war {
     from webAppDir
     from project(':frontend').tasks.gulpBuild
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:1.2.3'
+    }
 }
