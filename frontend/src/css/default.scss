@@ -8,11 +8,10 @@ form.saving {
 .blog-main {
   overflow: hidden;
 
-  div[ng-view] {
-
+  div[ng-view], .edit-post, .blog-post {
     &.ng-enter {
-      -webkit-animation: slideInRight 0.3s;
-      animation: slideInRight 0.3s;
+      -webkit-animation: fadeInRight 0.3s;
+      animation: fadeInRight 0.3s;
     }
   }
 }
