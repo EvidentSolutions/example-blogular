@@ -4,18 +4,13 @@
 
         <div ng-bind-html="sidebar.about"></div>
     </div>
+
     <div class="sidebar-module">
         <h4>Posts</h4>
 
         <progress ng-if="sidebar.archivePosts == null"></progress>
         <ol class="list-unstyled">
             <li ng-repeat="l in sidebar.archivePosts"><a href="/posts/{{l.slug}}">{{l.title}}</a></li>
-        </ol>
-    </div>
-    <div class="sidebar-module">
-        <h4>Elsewhere</h4>
-        <ol class="list-unstyled fa-ul">
-            <li ng-repeat="l in sidebar.externalLinks"><a href="{{l.href}}"><i class="fa fa-li fa-{{l.icon}}"></i> {{l.title}}</a></li>
         </ol>
     </div>
 </div>
