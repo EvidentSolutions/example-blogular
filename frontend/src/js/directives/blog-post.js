@@ -1,6 +1,7 @@
 "use strict";
 
-var directives = require('angular').module('blogular.directives');
+var angular = require('angular');
+var directives = angular.module('blogular.directives');
 
 directives.directive('blogPost', ['$modal', '$location', '$route', 'postService', ($modal, $location, $route, postService) => {
     return {
@@ -11,17 +12,34 @@ directives.directive('blogPost', ['$modal', '$location', '$route', 'postService'
             post: '='
         },
         link: ($scope) => {
+            $scope.editedPost = null;
+
             $scope.deletePost = () => {
                 $modal.open({
                     templateUrl: '/templates/dialogs/delete-post.html',
                     scope: $scope
                 }).result.then(() => {
                     postService.deletePost($scope.post.slug).then(() => {
-                        $location.path('/')
+                        $location.path('/');
                         $route.reload();
                     });
                 });
             };
+
+            $scope.editPost = () => {
+                $scope.editedPost = angular.copy($scope.post);
+            };
+
+            $scope.cancelEditing = () => {
+                $scope.editedPost = null;
+            };
+
+            $scope.save = () => {
+                // Update the post optimistically here before server returns a result
+                $scope.post = angular.copy($scope.editedPost);
+                $scope.editedPost = null;
+                postService.updatePost($scope.post);
+            }
         }
     };
 }]);

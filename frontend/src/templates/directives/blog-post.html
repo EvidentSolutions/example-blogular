@@ -1,12 +1,38 @@
-<div class="blog-post">
-    <h2 class="blog-post-title"><a href="/posts/{{post.slug}}">{{post.title}}</a></h2>
+<div>
+    <div class="blog-post" ng-if="editedPost == null">
+        <h2 class="blog-post-title"><a href="/posts/{{post.slug}}">{{post.title}}</a></h2>
 
-    <p class="blog-post-meta">
-        {{post.publishTime | date}} by {{post.author}}
+        <p class="blog-post-meta">
+            {{post.publishTime | date}} by {{post.author}}
         <span class="pull-right">
+            <a href="" ng-click="editPost()" title="Edit post"><i class="fa fa-pencil"></i></a>
             <a href="" ng-click="deletePost()" title="Delete post"><i class="fa fa-trash-o"></i></a>
         </span>
-    </p>
+        </p>
 
-    <div ng-bind-html="post.body | markdown"></div>
+        <div ng-bind-html="post.body | markdown"></div>
+    </div>
+
+    <form class="form-horizontal" name="postForm" id="postForm" role="form" novalidate ng-if="editedPost != null">
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <input type="text" class="form-control" id="inputPostTitle" ng-model="editedPost.title" autofocus required
+                       placeholder="Title" ng-disabled="saving">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <epic-editor ng-model="editedPost.body"></epic-editor>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <button ng-disabled="saving || postForm.$invalid" class="btn btn-primary" ng-click="save()">Save</button>
+                <button ng-disabled="saving" class="btn btn-default" ng-click="cancelEditing()">Cancel</button>
+            </div>
+        </div>
+    </form>
 </div>

@@ -1,8 +1,10 @@
 package fi.evident.blogular.core.dao;
 
 import fi.evident.blogular.core.model.BlogPost;
+import fi.evident.blogular.core.model.EditedPostData;
 import fi.evident.blogular.core.model.NewPostData;
 import fi.evident.dalesbred.Database;
+import fi.evident.dalesbred.NonUniqueResultException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,7 +23,7 @@ public class BlogPostDao {
 
     @NotNull
     public List<BlogPost> findAllPosts() {
-        return db.findAll(BlogPost.class, "SELECT slug, title, author, publish_time, body FROM blog_post ORDER BY publish_time desc, id desc");
+        return db.findAll(BlogPost.class, "SELECT slug, title, author, publish_time, body FROM blog_post ORDER BY publish_time DESC, id DESC");
     }
 
     @NotNull
@@ -34,6 +36,12 @@ public class BlogPostDao {
     }
 
     public boolean containsPostBySlug(@NotNull String slug) {
-        return db.findUniqueOrNull(String.class, "select slug from blog_post where slug = ?", slug) != null;
+        return db.findUniqueOrNull(String.class, "SELECT slug FROM blog_post WHERE slug = ?", slug) != null;
+    }
+
+    public void updatePost(@NotNull String slug, @NotNull EditedPostData post) {
+        int rows = db.update("UPDATE blog_post SET title=?, body=? WHERE slug=?", post.title, post.body, slug);
+        if (rows != 1)
+            throw new NonUniqueResultException(rows);
     }
 }

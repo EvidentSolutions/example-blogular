@@ -2,6 +2,7 @@ package fi.evident.blogular.web.controllers;
 
 import fi.evident.blogular.core.dao.BlogPostDao;
 import fi.evident.blogular.core.model.BlogPost;
+import fi.evident.blogular.core.model.EditedPostData;
 import fi.evident.blogular.core.model.NewPostData;
 import fi.evident.blogular.core.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,11 @@ public class PostsController {
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create("/api/posts/" + slug));
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/{slug}", method = RequestMethod.PUT)
+    public void updateBlogPost(@PathVariable String slug, @RequestBody EditedPostData post) {
+        blogPostDao.updatePost(slug, post);
     }
 
     @RequestMapping(value = "/{slug}", method = RequestMethod.GET)

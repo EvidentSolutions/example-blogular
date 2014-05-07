@@ -6,7 +6,9 @@ var config = require('../config');
 
 services.service('postService', ['$resource', '$rootScope', ($resource, $rootScope) => {
 
-    var Post = $resource(config.apiBase + "/posts/:slug");
+    var Post = $resource(config.apiBase + "/posts/:slug", null,  {
+        'update': { method:'PUT' }
+    });
 
     return {
         loadPost(slug) {
@@ -21,6 +23,10 @@ services.service('postService', ['$resource', '$rootScope', ($resource, $rootSco
             var newPost = angular.copy(post);
 
             return Post.save(newPost).$promise.then(() => $rootScope.$broadcast("postsChanged"));
+        },
+
+        updatePost(post) {
+            Post.update({slug: post.slug}, post).$promise.then(() => $rootScope.$broadcast("postsChanged"));
         },
 
         deletePost(slug) {
