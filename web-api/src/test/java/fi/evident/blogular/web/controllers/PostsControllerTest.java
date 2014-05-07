@@ -84,14 +84,15 @@ public class PostsControllerTest {
 
     @Test
     public void getPostBySlug() throws Exception {
-        postDao.savePost("my-test-post", "My Author", postWithTitleAndBody("Title of test", "My body"));
+        NewPostData post = postWithTitleAndBody("Title of test", "My body");
+        postDao.savePost("my-test-post", post);
 
         mvc.perform(get("/api/posts/my-test-post"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.slug").value("my-test-post"))
-                .andExpect(jsonPath("$.title").value("Title of test"))
-                .andExpect(jsonPath("$.author").value("My Author"))
-                .andExpect(jsonPath("$.body").value("My body"))
+                .andExpect(jsonPath("$.title").value(post.title))
+                .andExpect(jsonPath("$.author").value(post.author))
+                .andExpect(jsonPath("$.body").value(post.body))
                 .andExpect(jsonPath("$.publishTime").value(is(localDateTimeStringFor(aboutCurrentLocalDateTime()))));
     }
 
@@ -127,7 +128,7 @@ public class PostsControllerTest {
     }
 
     private void createArbitraryPostWithSlug(@NotNull String slug) {
-        postDao.savePost(slug, "My Author", postWithTitle("Title of test"));
+        postDao.savePost(slug, postWithTitle("Title of test"));
     }
 
     @NotNull
@@ -140,6 +141,7 @@ public class PostsControllerTest {
         NewPostData post = new NewPostData();
         post.title = title;
         post.body = body;
+        post.author = "My author";
         return post;
     }
 }

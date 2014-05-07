@@ -1,7 +1,8 @@
 package fi.evident.blogular.core.init;
 
 import fi.evident.blogular.core.annotations.ResourceReference;
-import fi.evident.dalesbred.Database;
+import fi.evident.blogular.core.model.NewPostData;
+import fi.evident.blogular.core.services.PostService;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,6 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.time.LocalDateTime;
 
 @Lazy(false)
 @Component
@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 public class DummyDataPopulator {
 
     @Autowired
-    private Database db;
+    private PostService postService;
 
     @Autowired
     private ResourceLoader resourceLoader;
@@ -36,16 +36,21 @@ public class DummyDataPopulator {
     public void populateInitialData() {
         log.info("Populating database with dummy data");
 
-        createPost("welcome", "Welcome!", "Juha Komulainen", LocalDateTime.of(2014, 5, 7, 9, 30), "classpath:dummy/welcome.md");
+        createPost("Dialogs", "classpath:initial-data/dialogs.md");
+        createPost("Filters", "classpath:initial-data/filters.md");
+        createPost("Directives", "classpath:initial-data/directives.md");
+        createPost("Services", "classpath:initial-data/services.md");
+        createPost("Controllers", "classpath:initial-data/controllers.md");
+        createPost("Project structure", "classpath:initial-data/project-structure.md");
     }
 
-    private void createPost(@NotNull String slug,
-                            @NotNull String title,
-                            @NotNull String author,
-                            @NotNull LocalDateTime publishTime,
-                            @NotNull @ResourceReference String location) {
-        String body = readResource(location);
-        db.update("insert into blog_post (slug, title, author, publish_time, body) values (?, ?, ?, ?, ?)", slug, title, author, publishTime, body);
+    private void createPost(@NotNull String title, @NotNull @ResourceReference String location) {
+        NewPostData data = new NewPostData();
+        data.title = title;
+        data.author = "Juha Komulainen";
+        data.body = readResource(location);
+
+        postService.createPost(data);
     }
 
     @NotNull

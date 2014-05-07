@@ -15,8 +15,8 @@ public class BlogPostDao {
     @Autowired
     private Database db;
 
-    public void savePost(@NotNull String slug, @NotNull String author, @NotNull NewPostData post) {
-        db.update("INSERT INTO blog_post (slug, author, title, body) VALUES (?, ?, ?, ?)", slug, author, post.title, post.body);
+    public void savePost(@NotNull String slug, @NotNull NewPostData post) {
+        db.update("INSERT INTO blog_post (slug, author, title, body) VALUES (?, ?, ?, ?)", slug, post.author, post.title, post.body);
     }
 
     @NotNull

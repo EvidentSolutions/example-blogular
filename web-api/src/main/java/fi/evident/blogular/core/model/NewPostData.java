@@ -9,4 +9,7 @@ public final class NewPostData {
 
     @NotNull
     public String body  = "";
+
+    @NotNull
+    public String author  = "";
 }
