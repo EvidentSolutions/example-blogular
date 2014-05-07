@@ -7,5 +7,8 @@
 var dummy = {
     publishTime: null,
     author: null,
-    $promise: null
+    $promise: null,
+    exportFile: null,
+    importFile: null,
+    link: null
 };

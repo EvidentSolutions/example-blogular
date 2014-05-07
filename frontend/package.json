@@ -33,7 +33,7 @@
     "gulp-compile-handlebars": "0.2.0",
     "gulp-rename": "1.2.0",
     "envify": "1.2.1",
-    "gulp-rev-all": "0.1.5",
+    "gulp-rev-all": "0.2.0",
     "gulp-uglify": "0.2.1",
     "gulp-if": "1.1.0",
     "gulp-streamify": "0.0.5"
@@ -55,6 +55,9 @@
     },
     "stomp": {
       "exports": "Stomp"
+    },
+    "epiceditor": {
+      "exports": "EpicEditor"
     }
   },
   "scripts": {
@@ -71,6 +74,8 @@
     "bootstrap": "./build/bower_components/bootstrap/dist/js/bootstrap.js",
     "sockjs": "./build/bower_components/sockjs/sockjs.js",
     "stomp": "./build/bower_components/stomp-websocket/lib/stomp.js",
+    "epiceditor": "./build/bower_components/epiceditor/src/editor.js",
+    "marked": "./build/bower_components/marked/lib/marked.js",
     "templates": "./build/gulp/tmp/templates.js"
   }
 }

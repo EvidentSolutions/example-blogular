@@ -13,6 +13,8 @@
     "stomp-websocket": "2.3.1",
     "sockjs": "0.3.4",
     "font-awesome": "4.0.3",
-    "animate.css": "3.1.1"
+    "animate.css": "3.1.1",
+    "epiceditor": "0.2.2",
+    "marked": "0.2.10"
   }
 }

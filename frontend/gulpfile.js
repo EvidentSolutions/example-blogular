@@ -91,6 +91,7 @@ gulp.task('serve', ['watch'], function() {
     http.createServer(app).listen(config.port);
 
     app.get(/^\/(post|posts)(\/.*)?$/, function(req, res) {
+        //noinspection JSCheckFunctionSignatures
         res.sendfile(path.join(paths.build.dest, 'index.html'));
     });
 
@@ -128,7 +129,13 @@ gulp.task('sass', function() {
         .on('error', handleErrors);
 });
 
-gulp.task('vendor-css', function() {
+gulp.task('epiceditor-css', function() {
+    return gulp.src('./build/bower_components/epiceditor/epiceditor/**/*.css')
+        .pipe(gulp.dest(path.join(paths.build.dest, 'css/epiceditor')))
+        .on('error', handleErrors);
+});
+
+gulp.task('vendor-css', ['epiceditor-css'], function() {
     return gulp.src(paths.vendor.stylesheets)
         .pipe(gulp.dest(path.join(paths.build.dest, 'css')))
         .on('error', handleErrors);
@@ -179,7 +186,7 @@ gulp.task('build', ['browserify', 'styles', 'templates']);
 
 gulp.task('optimize', ['build'], function() {
     gulp.src(path.join(paths.build.dest, '**'))
-        .pipe(revall({ ignoredExtensions: ['.html'] }))
+        .pipe(revall({ ignore: [/^index.html$/, /^css\/epiceditor\/.+/] }))
         .pipe(gulp.dest('./build/gulp/optimized'));
 });
 
