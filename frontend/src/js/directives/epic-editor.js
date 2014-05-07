@@ -38,14 +38,8 @@ directives.directive('epicEditor', [() => {
 
             editor.on('update', () => {
                 if (!valueUpdatingFromModel)
-                    $scope.$apply(read)
+                    $scope.$apply(() => ngModel.$setViewValue(editor.exportFile()))
             });
-
-            read();
-
-            function read() {
-                ngModel.$setViewValue(editor.exportFile());
-            }
         }
     };
 }]);
