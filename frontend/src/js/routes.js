@@ -1,5 +1,7 @@
 "use strict";
 
+// Route definitions for the application.
+
 exports.initializeRoutes = ($routeProvider) => {
     $routeProvider
         .when('/', { controller: 'ListPostsController', templateUrl: '/templates/views/list-posts.html' })

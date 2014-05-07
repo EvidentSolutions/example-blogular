@@ -1,6 +1,8 @@
 "use strict";
 
-// This is the main entry point of our application. First we'll load some libraries.
+// This is the main entry point of our application. Lets import some modules:
+var config = require('./config');
+var routes = require('./routes');
 
 // We'll need to load jQuery into global variable or Bootstrap and Angular won't find it.
 window.jQuery = require('jquery');
@@ -17,9 +19,6 @@ require('angular/i18n/angular-locale_fi');
 require('bootstrap');
 require('angular-bootstrap/ui-bootstrap-tpls');
 
-
-var config = require('./config');
-
 var angularModules = [
     'ngRoute',
     'ngSanitize',
@@ -35,17 +34,22 @@ var angularModules = [
     require('./services/services').name
 ];
 
+// During development, we don't want to generate template-cache, but serve the templates
+// directly from file system, but in production we wish to bundle all the templates in
+// the same JavaScript file as the code. The built 'templates' module contains an angular
+// module which will populate Angular's template-cache during startup.
 if (config.useTemplateCache) {
     require('templates');
     angularModules.push('blogular.templates');
 }
 
+// Finally we are ready to initialize our Angular application
 var app = angular.module('blogular', angularModules);
 
-app.config(['$locationProvider', '$routeProvider', ($locationProvider, $routeProvider) => {
-    $locationProvider.html5Mode(true);
+// Use the HTML5 History API
+app.config(['$locationProvider', $locationProvider => $locationProvider.html5Mode(true)]);
 
-    require('./routes').initializeRoutes($routeProvider);
-}]);
+// Initialize our routes
+app.config(['$routeProvider', routes.initializeRoutes]);
 
 module.exports = app;
