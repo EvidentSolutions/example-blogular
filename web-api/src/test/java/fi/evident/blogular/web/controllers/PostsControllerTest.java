@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -23,6 +22,7 @@ import static fi.evident.blogular.testutils.Matchers.aboutCurrentLocalDateTime;
 import static fi.evident.blogular.testutils.Matchers.localDateTimeStringFor;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -67,7 +67,7 @@ public class PostsControllerTest {
     public void postBlogPost() throws Exception {
         String json = objectMapper.writeValueAsString(postWithTitleAndBody("My test post", "My post body"));
 
-        mvc.perform(post("/api/posts").contentType(MediaType.APPLICATION_JSON).content(json))
+        mvc.perform(post("/api/posts").contentType(APPLICATION_JSON).content(json))
                 .andExpect(status().isCreated())
                 .andExpect(header().string("Location", "/api/posts/my-test-post"));
 
@@ -109,6 +109,21 @@ public class PostsControllerTest {
                 .andExpect(status().isOk());
 
         assertThat(postDao.findAllPosts().size(), is(0));
+    }
+
+    @Test
+    public void uniqueSlugsAreGeneratedForIdenticalTitles() throws Exception {
+        String json = objectMapper.writeValueAsString(postWithTitleAndBody("My test post", "My post body"));
+
+        mvc.perform(post("/api/posts").contentType(APPLICATION_JSON).content(json)).andExpect(status().isCreated());
+        mvc.perform(post("/api/posts").contentType(APPLICATION_JSON).content(json)).andExpect(status().isCreated());
+        mvc.perform(post("/api/posts").contentType(APPLICATION_JSON).content(json)).andExpect(status().isCreated());
+
+        List<BlogPost> posts = postDao.findAllPosts();
+        assertThat(posts.size(), is(3));
+        assertThat(posts.get(0).slug, is("my-test-post-3"));
+        assertThat(posts.get(1).slug, is("my-test-post-2"));
+        assertThat(posts.get(2).slug, is("my-test-post"));
     }
 
     private void createArbitraryPostWithSlug(@NotNull String slug) {

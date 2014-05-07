@@ -32,7 +32,7 @@ public class PostsController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create("/api/posts/" + slug));
-        return new ResponseEntity<Object>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/{slug}", method = RequestMethod.GET)
@@ -46,7 +46,16 @@ public class PostsController {
     }
 
     @NotNull
-    private static String createSlug(@NotNull String title) {
-        return title.replaceAll("\\s", "-").replaceAll("[^a-zA-Z-]+", "").toLowerCase();
+    private String createSlug(@NotNull String title) {
+        String normalized = title.replaceAll("\\s", "-").replaceAll("[^a-zA-Z-]+", "").toLowerCase();
+
+        if (!blogPostDao.containsPostBySlug(normalized))
+            return normalized;
+
+        for (int i = 2; ; i++) {
+            String slug = normalized + "-" + i;
+            if (!blogPostDao.containsPostBySlug(slug))
+                return slug;
+        }
     }
 }

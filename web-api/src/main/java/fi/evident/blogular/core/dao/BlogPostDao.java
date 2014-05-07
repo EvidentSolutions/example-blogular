@@ -32,4 +32,8 @@ public class BlogPostDao {
     public void deleteBySlug(@NotNull String slug) {
         db.update("DELETE FROM blog_post WHERE slug=?", slug);
     }
+
+    public boolean containsPostBySlug(@NotNull String slug) {
+        return db.findUniqueOrNull(String.class, "select slug from blog_post where slug = ?", slug) != null;
+    }
 }
