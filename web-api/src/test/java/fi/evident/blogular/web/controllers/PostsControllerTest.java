@@ -54,8 +54,8 @@ public class PostsControllerTest {
 
     @Test
     public void listBlogPosts() throws Exception {
-        postDao.savePost("hello-world", "user1", postWithTitle("Hello, world!"));
-        postDao.savePost("goodbye-world", "user2", postWithTitle("Goodbye!"));
+        createArbitraryPostWithSlug("hello-world");
+        createArbitraryPostWithSlug("goodbye-world");
 
         mvc.perform(get("/api/posts"))
                 .andExpect(status().isOk())
@@ -103,12 +103,16 @@ public class PostsControllerTest {
 
     @Test
     public void deletePostBySlug() throws Exception {
-        postDao.savePost("my-test-post", "user", postWithTitle("Title of the post"));
+        createArbitraryPostWithSlug("my-test-post");
 
         mvc.perform(delete("/api/posts/my-test-post"))
                 .andExpect(status().isOk());
 
         assertThat(postDao.findAllPosts().size(), is(0));
+    }
+
+    private void createArbitraryPostWithSlug(@NotNull String slug) {
+        postDao.savePost(slug, "My Author", postWithTitle("Title of test"));
     }
 
     @NotNull
