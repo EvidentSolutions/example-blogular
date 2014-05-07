@@ -20,7 +20,11 @@ services.service('postService', ['$resource', '$rootScope', ($resource, $rootSco
         savePost(post) {
             var newPost = angular.copy(post);
 
-            return Post.save(newPost).$promise.then(() => $rootScope.$broadcast("postAdded", newPost));
+            return Post.save(newPost).$promise.then(() => $rootScope.$broadcast("postsChanged"));
+        },
+
+        deletePost(slug) {
+            return Post.delete({slug: slug}).$promise.then(() => $rootScope.$broadcast("postsChanged"));
         }
     }
 }]);

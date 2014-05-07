@@ -36,5 +36,5 @@ controllers.controller('SidebarController', ['$scope', 'postService', ($scope, p
     }
 
     loadPosts();
-    $scope.$on('postAdded', loadPosts);
+    $scope.$on('postsChanged', loadPosts);
 }]);

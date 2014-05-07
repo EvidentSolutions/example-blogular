@@ -26,10 +26,13 @@ application for deployment.
 
   - `directives/active-on-location.js` is a simple directive that simply toggles a CSS class on element
     based on the current URL. It is used for the top navigation.
-  - `directives/blog-post.js` does not have any functionality, but is used to provide a template for
-    displaying posts.
+  - `directives/blog-post.js` provides a template for displaying posts and has some associated functionality.
   - `directives/epic-editor.js` wraps a third-party component so that it integrates smoothly with Angular.
 
 ### Filters
 
   - `filters/markdown-filter.js` provides a filter that can be used to convert Markdown to HTML.
+
+### Dialogs
+
+  - `directives/blog-post.js` pops up a modal confirmation dialog when deleting posts.
