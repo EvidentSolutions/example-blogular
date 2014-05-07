@@ -6,7 +6,7 @@
 
         <p class="blog-post-meta">{{post.publishTime | date}} by {{post.author}}</p>
 
-        <div ng-bind-html="post.body"></div>
+        <div ng-bind-html="post.body | markdown"></div>
     </div>
 
     <p ng-if="posts.length == 0">
