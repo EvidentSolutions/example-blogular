@@ -1,28 +1,18 @@
 "use strict";
 
 var angular = require('angular');
+var config = require('../config');
+
 var services = angular.module('blogular.services');
 
-services.service('loginService', ['$resource', '$rootScope', '$q', '$timeout', ($resource, $rootScope, $q, $timeout) => {
+services.service('loginService', ['$rootScope', '$http', ($rootScope, $http) => {
     $rootScope.currentUser = null;
 
     return {
         login(username, password) {
-            var deferred = $q.defer();
-
-            $timeout(() => {
-                if (username == 'komu' && password == 'pass') {
-                    var user = $rootScope.currentUser = {
-                        name: 'Juha Komulainen',
-                        authToken: 'komu'
-                    };
-                    deferred.resolve(user);
-                } else {
-                    deferred.reject();
-                }
-            }, 1000);
-
-            return deferred.promise;
+            return $http({method: 'POST', url: config.apiBase + '/account/login', params: { username: username, password: password }}).then((r) => {
+                return $rootScope.currentUser = r.data;
+            });
         },
 
         logout() {
