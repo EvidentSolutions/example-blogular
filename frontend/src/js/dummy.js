@@ -10,5 +10,6 @@ var dummy = {
     $promise: null,
     exportFile: null,
     importFile: null,
-    link: null
+    link: null,
+    authToken: null
 };

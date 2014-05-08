@@ -2,6 +2,7 @@
 
 var angular = require('angular');
 var config = require('../config');
+var $ = require('jquery');
 
 var services = angular.module('blogular.services');
 
@@ -10,7 +11,10 @@ services.service('loginService', ['$rootScope', '$http', ($rootScope, $http) => 
 
     return {
         login(username, password) {
-            return $http({method: 'POST', url: config.apiBase + '/account/login', params: { username: username, password: password }}).then((r) => {
+            var url = config.apiBase + '/account/login';
+            var data = $.param({ username: username, password: password });
+            var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+            return $http({method: 'POST', url: url, data: data, headers: headers}).then((r) => {
                 return $rootScope.currentUser = r.data;
             });
         },
@@ -27,7 +31,7 @@ services.config(['$httpProvider', ($httpProvider) => {
         return {
             'request': config => {
                 if ($rootScope.currentUser)
-                    config.headers['X-Auth-Token'] = $rootScope.currentUser.authToken;
+                    config.headers['Authorization'] = $rootScope.currentUser.authToken;
                 return config;
             }
         };
