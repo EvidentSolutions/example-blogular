@@ -13,7 +13,8 @@ services.service('loginService', ['$resource', '$rootScope', '$q', '$timeout', (
             $timeout(() => {
                 if (username == 'komu' && password == 'pass') {
                     var user = $rootScope.currentUser = {
-                        name: 'Juha Komulainen'
+                        name: 'Juha Komulainen',
+                        authToken: 'komu'
                     };
                     deferred.resolve(user);
                 } else {
@@ -28,4 +29,17 @@ services.service('loginService', ['$resource', '$rootScope', '$q', '$timeout', (
             $rootScope.currentUser = null;
         }
     }
+}]);
+
+// Adds a HTTP interceptor that adds auth-token to every
+services.config(['$httpProvider', ($httpProvider) => {
+    $httpProvider.interceptors.push(['$q', '$rootScope', ($q, $rootScope) => {
+        return {
+            'request': config => {
+                if ($rootScope.currentUser)
+                    config.headers['X-Auth-Token'] = $rootScope.currentUser.authToken;
+                return config;
+            }
+        };
+    }]);
 }]);
