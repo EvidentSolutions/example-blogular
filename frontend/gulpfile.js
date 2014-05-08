@@ -4,6 +4,7 @@ var gulp            = require('gulp');
 var clean           = require('gulp-clean');
 var path            = require('path');
 var browserify      = require('browserify');
+var browserifyShim  = require('browserify-shim');
 var es6ify          = require('es6ify');
 var source          = require('vinyl-source-stream');
 var express         = require('express');
@@ -23,6 +24,7 @@ var uglify          = require('gulp-uglify');
 var gulpif          = require('gulp-if');
 var streamify       = require('gulp-streamify');
 var concatCss       = require('gulp-concat-css');
+var gutil           = require('gulp-util');
 
 var config = {
     production: false,
@@ -61,7 +63,10 @@ var handleErrors = function() {
     this.emit('end');
 };
 
-gulp.task('browserify', ['compile-angular-templates'], function () {
+// Compiles JavaScript from ES6 to ES5 and bundles everything into a single file.
+gulp.task('compile-js', ['compile-angular-templates'], function () {
+
+    // Variables which will be inlined to src/js/config.js
     var env = {
         API_BASE: config.production ? '/api' : 'http://localhost:8080/api',
         USE_TEMPLATE_CACHE: config.production,
@@ -70,6 +75,7 @@ gulp.task('browserify', ['compile-angular-templates'], function () {
 
     var bundleStream = browserify()
         .add(es6ify.runtime)
+        .transform(browserifyShim)
         .transform(es6ify.configure(/^(?!.*(node_modules|bower_components))+.+\.js$/))
         .transform(envifyCustom(env))
         .require(require.resolve('./src/js/main.js'), { entry: true })
@@ -83,6 +89,7 @@ gulp.task('browserify', ['compile-angular-templates'], function () {
         .pipe(gulp.dest(path.join(paths.build.dest, 'js')));
 });
 
+// Starts an express server serving the static resources and begins watching changes
 gulp.task('serve', ['watch'], function() {
 
     /** @type Object */
@@ -92,13 +99,14 @@ gulp.task('serve', ['watch'], function() {
     app.use(express.static(paths.build.dest));
     app.use(express.static('./src'));
 
-    http.createServer(app).listen(config.port);
-
     //noinspection JSCheckFunctionSignatures
     app.get(/^\/(post|posts)(\/.*)?$/, function(req, res) {
         //noinspection JSCheckFunctionSignatures
         res.sendfile(path.join(paths.build.dest, 'index.html'));
     });
+
+    http.createServer(app).listen(config.port);
+    gutil.log("Started development server:", gutil.colors.magenta("http://localhost:" + config.port + "/"));
 
     /** @type Object */
     var lrServer = livereload();
@@ -107,7 +115,8 @@ gulp.task('serve', ['watch'], function() {
     });
 });
 
-gulp.task('open', ['serve'], function(cb) {
+// Starts a server and opens browser
+gulp.task('open-browser', ['serve'], function(cb) {
 
     var options = {
         url: "http://localhost:" + config.port,
@@ -118,6 +127,7 @@ gulp.task('open', ['serve'], function(cb) {
     cb();
 });
 
+// Compiles Sass stylesheets to CSS
 gulp.task('sass', function() {
     var options = { };
     if (config.production) {
@@ -134,12 +144,14 @@ gulp.task('sass', function() {
         .on('error', handleErrors);
 });
 
+// Copies the stylesheets of EpicEditor to proper place
 gulp.task('epiceditor-css', function() {
     return gulp.src('./build/bower_components/epiceditor/epiceditor/**/*.css')
         .pipe(gulp.dest(path.join(paths.build.dest, 'css/epiceditor')))
         .on('error', handleErrors);
 });
 
+// Creates a bundle from vendor CSS files
 gulp.task('vendor-css', ['epiceditor-css'], function() {
     return gulp.src(paths.vendor.stylesheets)
         .pipe(concatCss("vendor-bundle.css"))
@@ -148,20 +160,24 @@ gulp.task('vendor-css', ['epiceditor-css'], function() {
         .on('error', handleErrors);
 });
 
+// Copies fonts to proper place
 gulp.task('fonts', function() {
     return gulp.src(paths.vendor.fonts)
         .pipe(gulp.dest(path.join(paths.build.dest, 'fonts')))
         .on('error', handleErrors);
 });
 
+// Builds all styles
 gulp.task('styles', ['sass', 'vendor-css', 'fonts']);
 
+// Starts watching for changes
 gulp.task('watch', ['build'], function() {
-    gulp.watch(['./src/js/**/*.js'], ['browserify']);
+    gulp.watch(['./src/js/**/*.js'], ['compile-js']);
     gulp.watch(paths.sass, ['sass']);
     gulp.watch(paths.views, ['compile-views']);
 });
 
+// Compiles handlebars templates to html
 gulp.task('compile-views', function() {
     return gulp.src(paths.views)
         .pipe(handlebars({}))
@@ -171,6 +187,7 @@ gulp.task('compile-views', function() {
         .pipe(gulp.dest(paths.build.dest));
 });
 
+// Compiles angular templates to a single JavaScript module which populates the template-cache
 gulp.task('compile-angular-templates', function () {
     gulp.src(paths.templates)
         .pipe(templateCache({
@@ -182,30 +199,37 @@ gulp.task('compile-angular-templates', function () {
         .pipe(gulp.dest(paths.build.tmp));
 });
 
+// Build all templates
 gulp.task('templates', ['compile-views', 'compile-angular-templates']);
 
+// Cleans everything built
 gulp.task('clean', function () {
     return gulp.src(['build/gulp'], { read: false }).pipe(clean());
 });
 
-gulp.task('build', ['browserify', 'styles', 'templates']);
+// Builds everything
+gulp.task('build', ['compile-js', 'styles', 'templates']);
 
-gulp.task('optimize', ['build'], function() {
+// Create an optimized build
+gulp.task('build-optimized', ['build'], function() {
     gulp.src(path.join(paths.build.dest, '**'))
         .pipe(revall({ ignore: [/^index.html$/, /^css\/epiceditor\/.+/] }))
         .pipe(gulp.dest('./build/gulp/optimized'));
 });
 
+// Creates a production build
 gulp.task('build-production', ['clean'], function() {
     config.production = true;
-    gulp.start('optimize');
+    gulp.start('build-optimized');
 });
 
+// Creates a development build
 gulp.task('build-development', ['clean'], function() {
     config.production = false;
     gulp.start('build');
 });
 
+// By default, clean everything built and start local server
 gulp.task('default', ['clean'], function () {
-    gulp.start('open');
+    gulp.start('serve');
 });

@@ -37,12 +37,8 @@
     "gulp-uglify": "0.2.1",
     "gulp-if": "1.1.0",
     "gulp-streamify": "0.0.5",
-    "gulp-concat-css": "^0.1.4"
-  },
-  "browserify": {
-    "transform": [
-      "browserify-shim"
-    ]
+    "gulp-concat-css": "0.1.4",
+    "gulp-util": "2.2.14"
   },
   "browserify-shim": {
     "angular": {
