@@ -52,4 +52,6 @@ app.config(['$locationProvider', $locationProvider => $locationProvider.html5Mod
 // Initialize our routes
 app.config(['$routeProvider', routes.initializeRoutes]);
 
+app.config(['$logProvider', $logProvider => $logProvider.debugEnabled(config.debugLogging)]);
+
 module.exports = app;

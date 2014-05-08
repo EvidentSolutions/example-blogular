@@ -64,7 +64,8 @@ var handleErrors = function() {
 gulp.task('browserify', ['compile-angular-templates'], function () {
     var env = {
         API_BASE: config.production ? '/api' : 'http://localhost:8080/api',
-        USE_TEMPLATE_CACHE: config.production
+        USE_TEMPLATE_CACHE: config.production,
+        DEBUG_LOGGING: !config.production
     };
 
     var bundleStream = browserify()
