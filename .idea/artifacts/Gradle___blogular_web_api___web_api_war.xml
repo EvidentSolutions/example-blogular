@@ -32,6 +32,9 @@
           <element id="library" level="project" name="Gradle: logback-classic-1.1.2" />
           <element id="library" level="project" name="Gradle: hsqldb-2.3.2" />
           <element id="library" level="project" name="Gradle: logback-core-1.1.2" />
+          <element id="library" level="project" name="Gradle: spring-security-web-3.2.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: spring-security-core-3.2.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: spring-security-config-3.2.3.RELEASE" />
         </element>
       </element>
       <element id="directory" name="META-INF">
