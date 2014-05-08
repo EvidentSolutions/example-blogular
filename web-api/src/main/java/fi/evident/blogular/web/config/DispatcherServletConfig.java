@@ -8,8 +8,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -22,6 +24,10 @@ public class DispatcherServletConfig extends WebMvcConfigurationSupport {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired(required = false)
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+    private List<HandlerInterceptor> handlerInterceptors;
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
@@ -46,5 +52,11 @@ public class DispatcherServletConfig extends WebMvcConfigurationSupport {
                 ((MappingJackson2HttpMessageConverter) converter).setObjectMapper(objectMapper);
             }
         }
+    }
+
+    @Override
+    protected void addInterceptors(InterceptorRegistry registry) {
+        if (handlerInterceptors != null)
+            handlerInterceptors.forEach(registry::addInterceptor);
     }
 }
