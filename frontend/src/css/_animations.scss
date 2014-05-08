@@ -1,0 +1,10 @@
+.blog-main {
+  overflow: hidden;
+
+  div[ng-view], .edit-post, .blog-post {
+    &.ng-enter {
+      -webkit-animation: fadeInRight 0.3s;
+      animation: fadeInRight 0.3s;
+    }
+  }
+}
