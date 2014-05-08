@@ -4,11 +4,14 @@ var angular = require('angular');
 var services = angular.module('blogular.services');
 var config = require('../config');
 
-services.service('postService', ['$resource', '$rootScope', ($resource, $rootScope) => {
+services.service('postService', ['$resource', '$rootScope', 'messagingService', ($resource, $rootScope, messagingService) => {
 
     var Post = $resource(config.apiBase + "/posts/:slug", null,  {
         'update': { method:'PUT' }
     });
+
+    // When server tells that messages have been updated, broadcast an event to the application
+    messagingService.subscribe('/topic/posts/updated', () => $rootScope.$broadcast("postsChanged"));
 
     return {
         loadPost(slug) {
@@ -22,15 +25,15 @@ services.service('postService', ['$resource', '$rootScope', ($resource, $rootSco
         savePost(post) {
             var newPost = angular.copy(post);
 
-            return Post.save(newPost).$promise.then(() => $rootScope.$broadcast("postsChanged"));
+            return Post.save(newPost).$promise;
         },
 
         updatePost(post) {
-            Post.update({slug: post.slug}, post).$promise.then(() => $rootScope.$broadcast("postsChanged"));
+            Post.update({slug: post.slug}, post).$promise;
         },
 
         deletePost(slug) {
-            return Post.delete({slug: slug}).$promise.then(() => $rootScope.$broadcast("postsChanged"));
+            return Post.delete({slug: slug}).$promise;
         }
     }
 }]);
