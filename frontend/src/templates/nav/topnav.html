@@ -3,6 +3,11 @@
         <nav class="blog-nav">
             <a class="blog-nav-item" active-on-location href="/posts">Posts</a>
             <a class="blog-nav-item" active-on-location href="/post">New Post</a>
+
+            <span class="account" ng-controller="LoginController">
+                <a ng-if="currentUser == null" href="" ng-click="login()">Login</a>
+                <span ng-if="currentUser != null" >{{currentUser.name}}</span>
+            </span>
         </nav>
     </div>
 </div>
