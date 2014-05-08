@@ -13,7 +13,7 @@ controllers.controller('PostController', ['$scope', '$location', 'postService', 
         $scope.saving = true;
         postService.savePost(newPost).then(() => {
             $scope.saving = false;
-            $location.path('/')
+            $location.path('/posts')
         });
     }
 }]);

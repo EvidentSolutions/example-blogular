@@ -2,12 +2,13 @@
     <div class="blog-post" ng-if="editedPost == null">
         <h2 class="blog-post-title"><a href="/posts/{{post.slug}}">{{post.title}}</a></h2>
 
+        <div class="edit-actions">
+            <a href="" ng-click="editPost()" title="Edit post"><i class="fa fa-pencil"></i></a>
+            <a href="" ng-click="deletePost()" title="Delete post"><i class="fa fa-trash-o"></i></a>
+        </div>
         <p class="blog-post-meta">
             {{post.publishTime | date}} by {{post.author}}
-            <span class="pull-right">
-                <a href="" ng-click="editPost()" title="Edit post"><i class="fa fa-pencil"></i></a>
-                <a href="" ng-click="deletePost()" title="Delete post"><i class="fa fa-trash-o"></i></a>
-            </span>
+
         </p>
 
         <div ng-bind-html="post.body | markdown"></div>

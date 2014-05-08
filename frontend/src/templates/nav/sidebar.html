@@ -1,16 +1,18 @@
 <div ng-controller="SidebarController">
-    <div class="sidebar-module sidebar-module-inset">
+    <div class="sidebar-module">
         <h4>About</h4>
 
-        <div ng-bind-html="sidebar.about"></div>
+        <div>
+            Blogular is a simple AngularJS example application.
+        </div>
     </div>
 
     <div class="sidebar-module">
         <h4>Posts</h4>
 
-        <progress ng-if="sidebar.archivePosts == null"></progress>
-        <ol class="list-unstyled">
-            <li ng-repeat="l in sidebar.archivePosts"><a href="/posts/{{l.slug}}">{{l.title}}</a></li>
+        <progress ng-if="sidebar.posts == null"></progress>
+        <ol class="list-unstyled" ng-if="sidebar.posts != null">
+            <li ng-repeat="l in sidebar.posts"><a href="/posts/{{l.slug}}">{{l.title}}</a></li>
         </ol>
     </div>
 </div>

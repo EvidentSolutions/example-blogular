@@ -20,7 +20,7 @@ directives.directive('blogPost', ['$modal', '$location', '$route', 'postService'
                     scope: $scope
                 }).result.then(() => {
                     postService.deletePost($scope.post.slug).then(() => {
-                        $location.path('/');
+                        $location.path('/posts');
                         $route.reload();
                     });
                 });
