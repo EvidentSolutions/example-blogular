@@ -10,6 +10,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -35,8 +37,8 @@ public class PostsController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> postBlogPost(@RequestBody NewPostData post) {
-        post.author = "J. Random Hacker"; // TODO
+    public ResponseEntity<?> postBlogPost(@RequestBody NewPostData post, @AuthenticationPrincipal User user) {
+        post.author = user != null ? user.getUsername() : "Anonymous"; // TODO
 
         String slug = postService.createPost(post);
         notifyPostsUpdated();
