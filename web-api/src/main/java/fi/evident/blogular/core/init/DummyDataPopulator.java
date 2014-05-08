@@ -33,9 +33,10 @@ public class DummyDataPopulator {
     private static final Logger log = LoggerFactory.getLogger(DummyDataPopulator.class);
 
     @PostConstruct
-    public void populateInitialData() {
+    public void populateInitialData() throws IOException {
         log.info("Populating database with dummy data");
 
+        createPost("Exercises", "classpath:initial-data/exercises.md");
         createPost("Dialogs", "classpath:initial-data/dialogs.md");
         createPost("Filters", "classpath:initial-data/filters.md");
         createPost("Directives", "classpath:initial-data/directives.md");
@@ -44,7 +45,7 @@ public class DummyDataPopulator {
         createPost("Project structure", "classpath:initial-data/project-structure.md");
     }
 
-    private void createPost(@NotNull String title, @NotNull @ResourceReference String location) {
+    private void createPost(@NotNull String title, @NotNull @ResourceReference String location) throws IOException {
         NewPostData data = new NewPostData();
         data.title = title;
         data.author = "Juha Komulainen";
@@ -54,11 +55,9 @@ public class DummyDataPopulator {
     }
 
     @NotNull
-    private String readResource(@NotNull @ResourceReference String location) {
+    private String readResource(@NotNull @ResourceReference String location) throws IOException {
         try (InputStream inputStream = resourceLoader.getResource(location).getInputStream()) {
             return StreamUtils.copyToString(inputStream, Charset.forName("UTF-8"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 }
