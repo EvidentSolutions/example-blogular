@@ -22,6 +22,7 @@ var revall          = require('gulp-rev-all');
 var uglify          = require('gulp-uglify');
 var gulpif          = require('gulp-if');
 var streamify       = require('gulp-streamify');
+var concatCss       = require('gulp-concat-css');
 
 var config = {
     production: false,
@@ -140,6 +141,8 @@ gulp.task('epiceditor-css', function() {
 
 gulp.task('vendor-css', ['epiceditor-css'], function() {
     return gulp.src(paths.vendor.stylesheets)
+        .pipe(concatCss("vendor-bundle.css"))
+        .pipe(size({showFiles: true}))
         .pipe(gulp.dest(path.join(paths.build.dest, 'css')))
         .on('error', handleErrors);
 });
