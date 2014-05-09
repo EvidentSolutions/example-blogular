@@ -52,8 +52,11 @@ public class PostsControllerTest {
     private MockMvc mvc;
 
     @Before
+    @SuppressWarnings("SpellCheckingInspection")
     public void setup() {
-        mvc = webAppContextSetup(wac).addFilters(springSecurityFilterChain).build();
+        mvc = webAppContextSetup(wac)
+            .defaultRequest(get("/").header("Authorization", "Basic dXNlcjpwYXNzd29yZA=="))
+            .addFilters(springSecurityFilterChain).build();
         db.update("delete from blog_post");
     }
 
@@ -82,7 +85,7 @@ public class PostsControllerTest {
         BlogPost post = posts.get(0);
         assertThat(post.title, is("My test post"));
         assertThat(post.slug, is("my-test-post"));
-        assertThat(post.author, is("Anonymous"));
+        assertThat(post.author, is("user"));
         assertThat(post.body, is("My post body"));
         assertThat(post.publishTime, is(aboutCurrentLocalDateTime()));
     }
