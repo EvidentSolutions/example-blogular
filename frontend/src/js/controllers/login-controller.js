@@ -2,7 +2,7 @@
 
 var controllers = require('angular').module('blogular.controllers');
 
-controllers.controller('LoginController', ['$scope', '$modal', 'loginService', ($scope, $modal, loginService) => {
+controllers.controller('LoginController', ['$scope', '$modal', '$location', 'loginService', ($scope, $modal, $location, loginService) => {
 
     $scope.login = () => {
         $modal.open({
@@ -30,6 +30,8 @@ controllers.controller('LoginController', ['$scope', '$modal', 'loginService', (
     };
 
     $scope.logout = () => {
-        loginService.logout();
+        loginService.logout().then(() => {
+            $location.path('/');
+        });
     };
 }]);

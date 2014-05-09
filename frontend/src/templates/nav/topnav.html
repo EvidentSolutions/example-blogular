@@ -6,7 +6,7 @@
 
             <span class="account" ng-controller="LoginController">
                 <a ng-if="$root.currentUser == null" href="" ng-click="login()">Login</a>
-                <span ng-if="$root.currentUser != null">{{currentUser.name}}</span>
+                <a ng-if="$root.currentUser != null" href="" ng-click="logout()">{{currentUser.name}}</a>
             </span>
         </nav>
     </div>

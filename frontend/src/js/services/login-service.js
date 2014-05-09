@@ -6,7 +6,7 @@ var $ = require('jquery');
 
 var services = angular.module('blogular.services');
 
-services.service('loginService', ['$rootScope', '$http', ($rootScope, $http) => {
+services.service('loginService', ['$rootScope', '$http', '$q', ($rootScope, $http, $q) => {
     $rootScope.currentUser = null;
 
     return {
@@ -21,6 +21,10 @@ services.service('loginService', ['$rootScope', '$http', ($rootScope, $http) => 
 
         logout() {
             $rootScope.currentUser = null;
+
+            var deferred = $q.defer();
+            deferred.resolve();
+            return deferred.promise;
         }
     }
 }]);
