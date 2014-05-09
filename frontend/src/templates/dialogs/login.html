@@ -16,6 +16,13 @@
                 <input type="password" id="passwordInput" class="form-control" required ng-model="form.password" ng-disabled="loggingIn" />
             </div>
         </div>
+        <div class="row" ng-if="!loginFailed">
+            <div class="col-sm-offset-1 col-sm-10">
+                <div class="alert alert-info">
+                    Try logging with credentials <strong>user</strong> and <strong>password</strong>.
+                </div>
+            </div>
+        </div>
         <div class="row" ng-if="loginFailed">
             <div class="col-sm-offset-1 col-sm-10">
                 <div class="alert alert-warning">
