@@ -13,7 +13,6 @@
     "browserify-shim": "3.4.1",
     "browserify": "3.46.0",
     "gulp-changed": "0.3.0",
-    "gulp-compass": "1.1.8",
     "gulp-livereload": "1.5.0",
     "gulp-notify": "1.2.5",
     "gulp-open": "0.2.8",
