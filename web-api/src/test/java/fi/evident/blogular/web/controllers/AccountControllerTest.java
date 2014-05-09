@@ -1,10 +1,10 @@
 package fi.evident.blogular.web.controllers;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -23,22 +23,24 @@ public class AccountControllerTest {
     @Autowired
     private WebApplicationContext wac;
 
+    @Autowired
+    @SuppressWarnings("SpringJavaAutowiringInspection")
+    private FilterChainProxy springSecurityFilterChain;
+
     private MockMvc mvc;
 
     @Before
     public void setup() {
-        mvc = webAppContextSetup(wac).build();
+        mvc = webAppContextSetup(wac).addFilters(springSecurityFilterChain).build();
     }
 
     @Test
-    @Ignore
     public void loginWithProperCredentials() throws Exception {
         mvc.perform(post("/api/account/login").param("username", "user").param("password", "password"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @Ignore
     public void loginWithInvalidCredentials() throws Exception {
         mvc.perform(post("/api/account/login").param("username", "admin").param("password", "invalid"))
                 .andExpect(status().isUnauthorized());

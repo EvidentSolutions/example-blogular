@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -36,6 +37,10 @@ public class PostsControllerTest {
     private WebApplicationContext wac;
 
     @Autowired
+    @SuppressWarnings("SpringJavaAutowiringInspection")
+    private FilterChainProxy springSecurityFilterChain;
+
+    @Autowired
     private BlogPostDao postDao;
 
     @Autowired
@@ -48,7 +53,7 @@ public class PostsControllerTest {
 
     @Before
     public void setup() {
-        mvc = webAppContextSetup(wac).build();
+        mvc = webAppContextSetup(wac).addFilters(springSecurityFilterChain).build();
         db.update("delete from blog_post");
     }
 
@@ -77,7 +82,7 @@ public class PostsControllerTest {
         BlogPost post = posts.get(0);
         assertThat(post.title, is("My test post"));
         assertThat(post.slug, is("my-test-post"));
-        assertThat(post.author, is("J. Random Hacker"));
+        assertThat(post.author, is("Anonymous"));
         assertThat(post.body, is("My post body"));
         assertThat(post.publishTime, is(aboutCurrentLocalDateTime()));
     }
