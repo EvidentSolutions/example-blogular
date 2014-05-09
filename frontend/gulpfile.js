@@ -110,7 +110,7 @@ gulp.task('serve', ['watch'], function() {
 
     /** @type Object */
     var lrServer = livereload();
-    gulp.watch([path.join(paths.build.dest, '**'), './src/**']).on('change', function(file) {
+    gulp.watch([path.join(paths.build.dest, '**'), './src/templates/**']).on('change', function(file) {
         lrServer.changed(file.path);
     });
 });
