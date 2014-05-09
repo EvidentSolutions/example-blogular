@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 
 @Configuration
 @EnableWebMvcSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override

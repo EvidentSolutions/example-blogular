@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.security.web.bind.support.AuthenticationPrincipalArgumentResolver;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ViewResolver;
@@ -22,6 +22,7 @@ import java.util.List;
 @Configuration
 @ComponentScan(basePackages = "fi.evident.blogular.web")
 @Import(WebSocketConfiguration.class)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class DispatcherServletConfig extends WebMvcConfigurationSupport {
 
     @Autowired
@@ -31,6 +32,10 @@ public class DispatcherServletConfig extends WebMvcConfigurationSupport {
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private List<HandlerInterceptor> handlerInterceptors;
 
+    @Autowired
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+    private List<HandlerMethodArgumentResolver> argumentResolvers;
+
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
@@ -38,7 +43,7 @@ public class DispatcherServletConfig extends WebMvcConfigurationSupport {
 
     @Override
     protected void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(new AuthenticationPrincipalArgumentResolver());
+        argumentResolvers.addAll(this.argumentResolvers);
     }
 
     @Bean
