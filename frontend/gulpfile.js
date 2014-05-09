@@ -97,7 +97,7 @@ gulp.task('serve', ['watch'], function() {
 
     app.use(morgan('dev'));
     app.use(express.static(paths.build.dest));
-    app.use(express.static('./src'));
+    app.use('/templates', express.static('./src/templates'));
 
     //noinspection JSCheckFunctionSignatures
     app.get(/^\/(post|posts)(\/.*)?$/, function(req, res) {
