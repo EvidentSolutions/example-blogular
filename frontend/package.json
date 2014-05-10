@@ -5,7 +5,6 @@
   "version": "0.0.0",
   "dependencies": {
     "angular": "1.2.16",
-    "jquery": "2.1.1",
     "lodash": "2.4.1"
   },
   "devDependencies": {
@@ -40,9 +39,10 @@
   "browserify-shim": {
     "angular": {
       "exports": "angular",
-      "depends": [
-        "jquery:$"
-      ]
+      "depends": ["jquery"]
+    },
+    "jquery": {
+      "exports": "jQuery"
     },
     "sockjs": {
       "exports": "SockJS"
@@ -70,6 +70,7 @@
     "stomp": "./build/bower_components/stomp-websocket/lib/stomp.js",
     "epiceditor": "./build/bower_components/epiceditor/src/editor.js",
     "marked": "./build/bower_components/marked/lib/marked.js",
+    "jquery": "./build/bower_components/jquery/dist/jquery.min.js",
     "templates": "./build/gulp/tmp/templates.js"
   }
 }
