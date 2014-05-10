@@ -10,15 +10,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="frontend node_modules" level="project" />
     <orderEntry type="library" name="sass-stdlib" level="application" />
-    <orderEntry type="module-library">
-      <library name="bower_components">
-        <CLASSES />
-        <JAVADOC />
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/bower_components" />
-        </SOURCES>
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="frontend bower_components" level="project" />
   </component>
 </module>
 
