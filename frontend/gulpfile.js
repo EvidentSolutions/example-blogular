@@ -41,13 +41,13 @@ var paths = {
     },
     vendor: {
         stylesheets: [
-            './build/bower_components/bootstrap/dist/css/bootstrap.min.css',
-            './build/bower_components/font-awesome/css/font-awesome.min.css',
-            './build/bower_components/animate.css/animate.min.css'
+            './bower_components/bootstrap/dist/css/bootstrap.min.css',
+            './bower_components/font-awesome/css/font-awesome.min.css',
+            './bower_components/animate.css/animate.min.css'
         ],
         fonts: [
-            './build/bower_components/bootstrap/dist/fonts/*',
-            './build/bower_components/font-awesome/fonts/*'
+            './bower_components/bootstrap/dist/fonts/*',
+            './bower_components/font-awesome/fonts/*'
         ]
     }
 };
@@ -150,7 +150,7 @@ gulp.task('sass', function() {
 
 // Copies the stylesheets of EpicEditor to proper place
 gulp.task('epiceditor-css', function() {
-    return gulp.src('./build/bower_components/epiceditor/epiceditor/**/*.css')
+    return gulp.src('./bower_components/epiceditor/epiceditor/**/*.css')
         .pipe(gulp.dest(path.join(paths.build.dest, 'css/epiceditor')))
         .on('error', handleErrors);
 });
