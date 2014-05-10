@@ -134,7 +134,11 @@ gulp.task('sass', function() {
         options.outputStyle = 'compressed';
     } else {
         options.outputStyle = 'nested';
-        options.sourceComments = 'map';
+
+        if (process.platform !== 'win32') {
+            // Source maps are broken on Windows. See https://github.com/dlmanning/gulp-sass/issues/28
+            options.sourceComments = 'map';
+        }
     }
 
     return gulp.src(paths.sass)
