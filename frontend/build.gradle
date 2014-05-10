@@ -21,12 +21,12 @@ task gulpBuild(type: NodeTask, dependsOn: 'npmInstall') {
     inputs.files 'gulpfile.js', 'bower.json', 'package.json'
     outputs.dir 'build/gulp/optimized'
 
-    script = file('node_modules/.bin/gulp')
+    script = file('node_modules/gulp/bin/gulp.js')
     args = ['build-production']
 }
 
 task gulpServe(type: NodeTask, dependsOn: 'npmInstall') {
-    script = file('node_modules/.bin/gulp')
+    script = file('node_modules/gulp/bin/gulp.js')
     args = ['default']
 }
 
