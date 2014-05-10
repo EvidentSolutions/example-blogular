@@ -3,10 +3,6 @@
   "description": "npm packages needed to build blogular",
   "private": true,
   "version": "0.0.0",
-  "dependencies": {
-    "angular": "1.2.16",
-    "lodash": "2.4.1"
-  },
   "devDependencies": {
     "node-sass": "0.8.6",
     "browserify-shim": "3.4.1",
@@ -71,6 +67,7 @@
     "epiceditor": "./build/bower_components/epiceditor/src/editor.js",
     "marked": "./build/bower_components/marked/lib/marked.js",
     "jquery": "./build/bower_components/jquery/dist/jquery.min.js",
+    "lodash": "./build/bower_components/lodash/dist/lodash.min.js",
     "templates": "./build/gulp/tmp/templates.js"
   }
 }
