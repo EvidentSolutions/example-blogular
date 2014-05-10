@@ -66,7 +66,7 @@
     "stomp": "./bower_components/stomp-websocket/lib/stomp.js",
     "epiceditor": "./bower_components/epiceditor/src/editor.js",
     "marked": "./bower_components/marked/lib/marked.js",
-    "jquery": "./bower_components/jquery/dist/jquery.min.js",
+    "jquery": "./bower_components/jquery/dist/jquery.js",
     "lodash": "./bower_components/lodash/dist/lodash.min.js",
     "templates": "./build/gulp/tmp/templates.js"
   }
