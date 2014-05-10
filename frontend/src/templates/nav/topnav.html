@@ -4,16 +4,6 @@
             <a class="blog-nav-item" active-on-location href="/posts">Posts</a>
             <a class="blog-nav-item" active-on-location href="/post" ng-if="$root.currentUser != null">New Post</a>
 
-            <span class="dropdown blog-nav-item" style="color: red">
-                <a href="#" class="dropdown-toggle" style="color: white" data-toggle="dropdown">Vacations <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                    <li><a href="/vacations/{{login}}">My vacations</a></li>
-                    <li><a href="/vacations">Summary</a></li>
-                    <li class="divider"></li>
-                    <li><a href="/vacations/sources">Sources</a></li>
-                </ul>
-            </span>
-
             <span class="account" ng-controller="LoginController">
                 <a ng-if="$root.currentUser == null" href="" ng-click="login()">Login</a>
 
