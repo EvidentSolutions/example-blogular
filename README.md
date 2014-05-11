@@ -45,3 +45,6 @@ gulp takes a little longer to start. So if you have a working Node.js environmen
     npm install -g gulp
 
 After this you can just execute `gulp` in the `frontend` directory to run the frontend server.
+
+(If you haven't followed the steps of Quick-start above, you'll also need to run `npm install` manually
+in the `frontend`-directory before running gulp.)
