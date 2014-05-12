@@ -5,7 +5,7 @@
             <a class="blog-nav-item" active-on-location href="/post" ng-if="$root.currentUser != null">New Post</a>
 
             <span class="account" ng-controller="LoginController">
-                <a ng-if="$root.currentUser == null" href="" ng-click="login()">Login</a>
+                <a ng-if="$root.currentUser == null" href="" class="login" ng-click="login()">Login</a>
 
                 <div class="dropdown" ng-if="$root.currentUser != null">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{currentUser.name}} <b class="caret"></b></a>
