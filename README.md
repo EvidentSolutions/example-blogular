@@ -58,7 +58,7 @@ in `frontend`-directory:
 
 ## Running end-to-end tests
 
-End-to-end tests are implemented using [Protactor](https://github.com/angular/protractor). First we need
+End-to-end tests are implemented using [Protractor](https://github.com/angular/protractor). First we need
 install the driver for Chrome, by issuing the following in `frontend`-directory:
 
     node_modules/.bin/webdriver-manager update
