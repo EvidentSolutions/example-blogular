@@ -8,7 +8,6 @@ public class DefaultController {
 
     @RequestMapping("/")
     public String defaultPage() {
-        //noinspection SpringMVCViewInspection
         return "/index.html";
     }
 }
