@@ -51,7 +51,7 @@ in the `frontend`-directory before running gulp.)
 
 ## Running JavaScript unit tests
 
-Unit-tests are use [Karma](http://karma-runner.github.io/). Run them by executing the following command
+Unit-tests are using [Karma](http://karma-runner.github.io/). Run them by executing the following command
 in `frontend`-directory:
 
     gulp test
