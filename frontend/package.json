@@ -30,7 +30,9 @@
     "gulp-if": "1.1.0",
     "gulp-streamify": "0.0.5",
     "gulp-concat-css": "0.1.4",
-    "gulp-util": "2.2.14"
+    "gulp-util": "2.2.14",
+    "gulp-protractor": "0.0.7",
+    "protractor": "0.22.0"
   },
   "browserify-shim": {
     "angular": {

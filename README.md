@@ -48,3 +48,19 @@ After this you can just execute `gulp` in the `frontend` directory to run the fr
 
 (If you haven't followed the steps of Quick-start above, you'll also need to run `npm install` manually
 in the `frontend`-directory before running gulp.)
+
+## Running end-to-end tests
+
+End-to-end tests are implemented using [Protactor](https://github.com/angular/protractor). First we need
+install the driver for Chrome, by issuing the following in `frontend`-directory:
+
+    node_modules/.bin/webdriver-manager update
+
+After this we can start Selenium server:
+
+    node_modules/.bin/webdriver-manager start
+
+When the server is running, we should start our application (e.g. using the method described in Quick-start)
+and then we can execute the tests against our application:
+
+    gulp test-e2e

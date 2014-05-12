@@ -25,6 +25,7 @@ var gulpif          = require('gulp-if');
 var streamify       = require('gulp-streamify');
 var concatCss       = require('gulp-concat-css');
 var gutil           = require('gulp-util');
+var protractor      = require("gulp-protractor").protractor;
 
 var config = {
     production: false,
@@ -201,6 +202,14 @@ gulp.task('compile-angular-templates', function () {
         }))
         .pipe(size({showFiles: true}))
         .pipe(gulp.dest(paths.build.tmp));
+});
+
+gulp.task('test-e2e', function() {
+    gulp.src(["./test/e2e/**/*_spec.js"])
+        .pipe(protractor({
+            configFile: "test/protractor.conf.js"
+        }))
+        .on('error', handleErrors)
 });
 
 // Build all templates
