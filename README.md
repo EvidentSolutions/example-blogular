@@ -49,6 +49,13 @@ After this you can just execute `gulp` in the `frontend` directory to run the fr
 (If you haven't followed the steps of Quick-start above, you'll also need to run `npm install` manually
 in the `frontend`-directory before running gulp.)
 
+## Running JavaScript unit tests
+
+Unit-tests are use [Karma](http://karma-runner.github.io/). Run them by executing the following command
+in `frontend`-directory:
+
+    gulp test
+
 ## Running end-to-end tests
 
 End-to-end tests are implemented using [Protactor](https://github.com/angular/protractor). First we need

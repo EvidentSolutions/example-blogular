@@ -26,6 +26,7 @@ var streamify       = require('gulp-streamify');
 var concatCss       = require('gulp-concat-css');
 var gutil           = require('gulp-util');
 var protractor      = require("gulp-protractor").protractor;
+var karma           = require("gulp-karma");
 
 var config = {
     production: false,
@@ -204,8 +205,17 @@ gulp.task('compile-angular-templates', function () {
         .pipe(gulp.dest(paths.build.tmp));
 });
 
+gulp.task('test', function() {
+    return gulp.src("./test/unit/**")
+        .pipe(karma({
+            configFile: 'test/karma.conf.js',
+            action: 'run'
+        }))
+        .on('error', handleErrors);
+});
+
 gulp.task('test-e2e', function() {
-    gulp.src(["./test/e2e/**/*_spec.js"])
+    return gulp.src(["./test/e2e/**"])
         .pipe(protractor({
             configFile: "test/protractor.conf.js"
         }))

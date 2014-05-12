@@ -9,6 +9,7 @@
     "angular-sanitize": "1.2.16",
     "angular-resource": "1.2.16",
     "angular-animate": "1.2.16",
+    "angular-mocks": "1.2.16",
     "angular-bootstrap": "0.10.0",
     "bootstrap": "3.1.1",
     "stomp-websocket": "2.3.1",
