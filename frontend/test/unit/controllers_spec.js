@@ -8,25 +8,21 @@ require('angular/mocks');
 require('../../src/js/controllers/controllers');
 
 describe('controllers', () => {
-    beforeEach(angular.mock.module('blogular.controllers'));
-
     describe('SidebarController', () => {
-        beforeEach(() => {
-            angular.mock.module($provide => {
-                // Set up a mock postService which just returns locals posts
-                $provide.service('postService', $q => {
-                    var self = {
-                        posts: [],
-                        loadPosts() {
-                            var deferred = $q.defer();
-                            deferred.resolve(self.posts);
-                            return deferred.promise;
-                        }
-                    };
-                    return self;
-                });
-            })
-        });
+        beforeEach(angular.mock.module('blogular.controllers', $provide => {
+            // Set up a mock postService which just returns locals posts
+            $provide.service('postService', $q => {
+                var self = {
+                    posts: [],
+                    loadPosts() {
+                        var deferred = $q.defer();
+                        deferred.resolve(self.posts);
+                        return deferred.promise;
+                    }
+                };
+                return self;
+            });
+        }));
 
         it("loads posts on startup", inject(($controller, $rootScope, postService) => {
             var posts = [{title: 'foo'}, {title: 'bar'}];
