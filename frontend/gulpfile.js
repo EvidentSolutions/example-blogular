@@ -206,7 +206,7 @@ gulp.task('compile-angular-templates', function () {
 });
 
 gulp.task('test', function() {
-    return gulp.src("./test/unit/**")
+    return gulp.src("./test/unit/**/*_spec.js")
         .pipe(karma({
             configFile: 'test/karma.conf.js',
             action: 'run'
@@ -215,7 +215,7 @@ gulp.task('test', function() {
 });
 
 gulp.task('test-e2e', function() {
-    return gulp.src(["./test/e2e/**"])
+    return gulp.src(["./test/e2e/**/*_spec.js"])
         .pipe(protractor({
             configFile: "test/protractor.conf.js"
         }))
