@@ -30,11 +30,20 @@ task gulpServe(type: NodeTask, dependsOn: 'npmInstall') {
     args = ['default']
 }
 
+task gulpTest(type: NodeTask, dependsOn: 'npmInstall') {
+    script = file('node_modules/gulp/bin/gulp.js')
+    args = ['test']
+}
+
 task deleteNodeModules(type: Delete) {
     delete 'node_modules'
 }
 
 clean.dependsOn deleteNodeModules
+
+task test {
+    dependsOn gulpTest
+}
 
 task build {
     dependsOn gulpBuild
