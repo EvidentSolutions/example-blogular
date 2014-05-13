@@ -33,7 +33,7 @@ services.service('loginService', ['$rootScope', '$http', '$q', ($rootScope, $htt
             deferred.resolve();
             return deferred.promise;
         }
-    }
+    };
 }]);
 
 services.run(['$rootScope', ($rootScope) => {
@@ -42,7 +42,7 @@ services.run(['$rootScope', ($rootScope) => {
         $rootScope.currentUser = {
             name: localStorage['currentUser.name'],
             authToken: localStorage['currentUser.authToken']
-        }
+        };
     } else {
         $rootScope.currentUser = null;
     }
@@ -54,7 +54,7 @@ services.config(['$httpProvider', ($httpProvider) => {
         return {
             'request': config => {
                 if ($rootScope.currentUser)
-                    config.headers['Authorization'] = $rootScope.currentUser.authToken;
+                    config.headers.Authorization = $rootScope.currentUser.authToken;
                 return config;
             }
         };

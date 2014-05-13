@@ -1,0 +1,10 @@
+{
+    "browser": true,
+    "globalstrict": true,
+    "esnext": true,
+
+    "predef": [
+        "require", "module", "exports", "element", "by", "browser", "describe", "beforeEach", "it", "expect",
+        "angular", "inject"
+    ]
+}

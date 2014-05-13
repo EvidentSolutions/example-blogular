@@ -38,7 +38,7 @@ directives.directive('epicEditor', [() => {
 
             editor.on('update', () => {
                 if (!valueUpdatingFromModel)
-                    $scope.$apply(() => ngModel.$setViewValue(editor.exportFile()))
+                    $scope.$apply(() => ngModel.$setViewValue(editor.exportFile()));
             });
         }
     };

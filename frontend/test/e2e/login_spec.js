@@ -10,7 +10,7 @@ var FrontPage = function() {
 
     this.openLoginDialog = function() {
         this.loginLink.click();
-    }
+    };
 };
 
 var LoginDialog = function() {

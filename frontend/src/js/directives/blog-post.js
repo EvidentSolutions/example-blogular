@@ -39,7 +39,7 @@ directives.directive('blogPost', ['$modal', '$location', '$route', 'postService'
                 $scope.post = angular.copy($scope.editedPost);
                 $scope.editedPost = null;
                 postService.updatePost($scope.post);
-            }
+            };
         }
     };
 }]);
