@@ -19,6 +19,9 @@ require('angular/i18n/angular-locale_fi');
 require('bootstrap');
 require('angular-bootstrap/ui-bootstrap-tpls');
 
+// Workaround for bugs
+require('./hacks/angular-bootstrap-autofocus-hack');
+
 var angularModules = [
     'ngRoute',
     'ngSanitize',
