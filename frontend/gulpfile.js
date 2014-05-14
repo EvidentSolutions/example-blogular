@@ -102,7 +102,7 @@ gulp.task('serve', ['watch'], function() {
     app.use('/templates', express.static('./src/templates'));
 
     //noinspection JSCheckFunctionSignatures
-    app.get(/^\/(post|posts)(\/.*)?$/, function(req, res) {
+    app.get(/^\/(post|posts|login)(\/.*)?$/, function(req, res) {
         //noinspection JSCheckFunctionSignatures
         res.sendfile(path.join(paths.build.dest, 'index.html'));
     });

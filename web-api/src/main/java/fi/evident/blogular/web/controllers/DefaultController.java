@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class DefaultController {
 
-    @RequestMapping("/")
+    @RequestMapping({"/", "/post", "/posts/**", "/login"})
     public String defaultPage() {
         return "/index.html";
     }
