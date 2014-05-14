@@ -8,7 +8,7 @@
                 <a ng-if="$root.currentUser == null" href="" class="login" ng-click="login()">Login</a>
 
                 <div class="dropdown" ng-if="$root.currentUser != null">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{currentUser.name}} <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle"><i class="fa fa-user"></i> {{currentUser.name}} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="" ng-click="logout()">Logout</a></li>
                     </ul>
