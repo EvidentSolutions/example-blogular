@@ -26,7 +26,7 @@ var angularModules = [
     'ngAnimate',
     'ui.bootstrap.modal',
     'ui.bootstrap.tabs',
-    'ui.bootstrap.dropdownToggle',
+    'ui.bootstrap.dropdown',
     'ui.bootstrap.tpls',
     require('./controllers/controllers').name,
     require('./directives/directives').name,
