@@ -2,7 +2,6 @@
 
 // This is the main entry point of our application. Lets import some modules:
 var config = require('./config');
-var routes = require('./routes');
 
 // We'll need to load jQuery into global variable or Bootstrap and Angular won't find it.
 window.jQuery = require('jquery');
@@ -34,7 +33,8 @@ var angularModules = [
     require('./controllers/controllers').name,
     require('./directives/directives').name,
     require('./filters/filters').name,
-    require('./services/services').name
+    require('./services/services').name,
+    require('./routes').name
 ];
 
 // During development, we don't want to generate template-cache, but serve the templates
@@ -51,9 +51,6 @@ var app = angular.module('blogular', angularModules);
 
 // Use the HTML5 History API
 app.config(['$locationProvider', $locationProvider => $locationProvider.html5Mode(true)]);
-
-// Initialize our routes
-app.config(['$routeProvider', routes.initializeRoutes]);
 
 app.config(['$logProvider', $logProvider => $logProvider.debugEnabled(config.debugLogging)]);
 
