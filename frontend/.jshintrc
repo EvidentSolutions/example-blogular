@@ -4,6 +4,6 @@
     "esnext": true,
 
     "predef": [
-        "require", "module", "exports", "confirm"
+        "require", "module", "exports", "confirm", "process"
     ]
 }
