@@ -3,6 +3,7 @@
 var gulp            = require('gulp');
 var clean           = require('gulp-clean');
 var path            = require('path');
+var browserify      = require('browserify');
 var browserifyShim  = require('browserify-shim');
 var es6ify          = require('es6ify');
 var source          = require('vinyl-source-stream');
@@ -75,7 +76,9 @@ gulp.task('compile-js', ['compile-angular-templates'], function () {
         DEBUG_LOGGING: !config.production
     };
 
-    var bundler = watchify('./src/js/main.js')
+    var ify = config.production ? browserify : watchify;
+
+    var bundler = ify('./src/js/main.js')
         .transform(browserifyShim)
         .transform(es6ify.configure(/^(?!.*(node_modules|bower_components))+.+\.js$/))
         .transform(envifyCustom(env));
@@ -241,7 +244,7 @@ gulp.task('build', ['compile-js', 'styles', 'templates']);
 
 // Create an optimized build
 gulp.task('build-optimized', ['build'], function() {
-    gulp.src(path.join(paths.build.dest, '**'))
+    return gulp.src(path.join(paths.build.dest, '**'))
         .pipe(revall({ ignore: [/^index.html$/, /^css\/epiceditor\/.+/] }))
         .pipe(gulp.dest('./build/gulp/optimized'));
 });
