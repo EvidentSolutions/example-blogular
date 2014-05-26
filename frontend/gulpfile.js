@@ -109,13 +109,13 @@ gulp.task('compile-js', ['compile-libs', 'compile-angular-templates'], function 
     bundler.on('update', rebundle);
     bundler.on('log', function (msg) {
         msg = msg.replace(/\d+(\.\d*)? seconds*/g, function (m) { return gutil.colors.magenta(m); });
-        gutil.log("watchify:", gutil.colors.blue('bundle.js'), msg);
+        gutil.log("watchify:", gutil.colors.blue('app.js'), msg);
     });
 
     function rebundle() {
         return bundler.bundle({debug: !config.production})
             .on('error', handleErrors)
-            .pipe(source('bundle.js'))
+            .pipe(source('app.js'))
             .pipe(gulpif(config.production, streamify(uglify())))
             .pipe(gulp.dest(path.join(paths.build.dest, 'js')));
     }
