@@ -5,10 +5,13 @@
       <w>autogrow</w>
       <w>bartik</w>
       <w>blogular</w>
+      <w>bundler</w>
       <w>epiceditor</w>
       <w>javase</w>
       <w>preprocess</w>
       <w>protactor</w>
+      <w>rebundle</w>
+      <w>watchify</w>
       <w>webdriver</w>
     </words>
   </dictionary>

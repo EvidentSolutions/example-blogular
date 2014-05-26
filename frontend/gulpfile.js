@@ -1,9 +1,9 @@
+/*global process */
 "use strict";
 
 var gulp            = require('gulp');
 var clean           = require('gulp-clean');
 var path            = require('path');
-var browserify      = require('browserify');
 var browserifyShim  = require('browserify-shim');
 var es6ify          = require('es6ify');
 var source          = require('vinyl-source-stream');
@@ -25,8 +25,9 @@ var gulpif          = require('gulp-if');
 var streamify       = require('gulp-streamify');
 var concatCss       = require('gulp-concat-css');
 var gutil           = require('gulp-util');
-var protractor      = require("gulp-protractor").protractor;
-var karma           = require("gulp-karma");
+var protractor      = require('gulp-protractor').protractor;
+var karma           = require('gulp-karma');
+var watchify        = require('watchify');
 
 var config = {
     production: false,
@@ -75,20 +76,27 @@ gulp.task('compile-js', ['compile-angular-templates'], function () {
         DEBUG_LOGGING: !config.production
     };
 
-    var bundleStream = browserify()
+    var bundler = watchify('./src/js/main.js')
         .add(es6ify.runtime)
         .transform(browserifyShim)
         .transform(es6ify.configure(/^(?!.*(node_modules|bower_components))+.+\.js$/))
-        .transform(envifyCustom(env))
-        .require(require.resolve('./src/js/main.js'), { entry: true })
-        .bundle({debug: !config.production});
+        .transform(envifyCustom(env));
 
-    return bundleStream
-        .on('error', handleErrors)
-        .pipe(source('bundle.js'))
-        .pipe(gulpif(config.production, streamify(uglify())))
-        .pipe(streamify(size({showFiles: true})))
-        .pipe(gulp.dest(path.join(paths.build.dest, 'js')));
+    bundler.on('update', rebundle);
+    bundler.on('log', function (msg) {
+        msg = msg.replace(/\d+(\.\d*)? seconds*/g, function (m) { return gutil.colors.magenta(m); });
+        gutil.log("watchify:", gutil.colors.blue('bundle.js'), msg);
+    });
+
+    function rebundle() {
+        return bundler.bundle({debug: !config.production})
+            .on('error', handleErrors)
+            .pipe(source('bundle.js'))
+            .pipe(gulpif(config.production, streamify(uglify())))
+            .pipe(gulp.dest(path.join(paths.build.dest, 'js')));
+    }
+
+    return rebundle();
 });
 
 // Starts an express server serving the static resources and begins watching changes
@@ -178,7 +186,7 @@ gulp.task('styles', ['sass', 'vendor-css', 'fonts']);
 
 // Starts watching for changes
 gulp.task('watch', ['build'], function() {
-    gulp.watch(['./src/js/**/*.js'], ['compile-js']);
+    //gulp.watch(['./src/js/**/*.js'], ['compile-js']);
     gulp.watch(paths.sass, ['sass']);
     gulp.watch(paths.views, ['compile-views']);
 });
@@ -219,7 +227,7 @@ gulp.task('test-e2e', function() {
         .pipe(protractor({
             configFile: "test/protractor.conf.js"
         }))
-        .on('error', handleErrors)
+        .on('error', handleErrors);
 });
 
 // Build all templates

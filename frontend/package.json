@@ -36,7 +36,8 @@
     "karma-jasmine": "0.1.5",
     "gulp-protractor": "0.0.7",
     "protractor": "0.22.0",
-    "gulp-karma": "0.0.4"
+    "gulp-karma": "0.0.4",
+    "watchify": "0.10.1"
   },
   "browserify-shim": {
     "angular": {
@@ -46,7 +47,7 @@
       ]
     },
     "lodash": {
-        "exports": "_"
+      "exports": "_"
     },
     "jquery": {
       "exports": "jQuery"
