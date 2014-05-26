@@ -1,5 +1,7 @@
 "use strict";
 
+require('traceur-runtime');
+
 // This is the main entry point of our application. Lets import some modules:
 var config = require('./config');
 

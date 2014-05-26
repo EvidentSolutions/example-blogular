@@ -76,7 +76,6 @@ gulp.task('compile-js', ['compile-angular-templates'], function () {
     };
 
     var bundler = watchify('./src/js/main.js')
-        .add(es6ify.runtime)
         .transform(browserifyShim)
         .transform(es6ify.configure(/^(?!.*(node_modules|bower_components))+.+\.js$/))
         .transform(envifyCustom(env));
