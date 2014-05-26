@@ -66,8 +66,29 @@ var handleErrors = function() {
     this.emit('end');
 };
 
+// Prepare externalLibraries from package.json:
+var externalLibraries = [];
+var browserDependencies = require('./package.json').browser;
+for (var key in browserDependencies) {
+    if (browserDependencies.hasOwnProperty(key) && /^\.\/(node_modules|bower_components)\/.+$/.test(browserDependencies[key]))
+        externalLibraries.push(key);
+}
+
+gulp.task('compile-libs',function () {
+
+    var bundler = browserify();
+    bundler.transform(browserifyShim);
+    bundler.require(externalLibraries);
+
+    return bundler.bundle({debug: !config.production})
+        .on('error', handleErrors)
+        .pipe(source('libs.js'))
+        .pipe(gulpif(config.production, streamify(uglify())))
+        .pipe(gulp.dest(path.join(paths.build.dest, 'js')));
+});
+
 // Compiles JavaScript from ES6 to ES5 and bundles everything into a single file.
-gulp.task('compile-js', ['compile-angular-templates'], function () {
+gulp.task('compile-js', ['compile-libs', 'compile-angular-templates'], function () {
 
     // Variables which will be inlined to src/js/config.js
     var env = {
@@ -82,6 +103,8 @@ gulp.task('compile-js', ['compile-angular-templates'], function () {
         .transform(browserifyShim)
         .transform(es6ify.configure(/^(?!.*(node_modules|bower_components))+.+\.js$/))
         .transform(envifyCustom(env));
+
+    bundler.external(externalLibraries);
 
     bundler.on('update', rebundle);
     bundler.on('log', function (msg) {
