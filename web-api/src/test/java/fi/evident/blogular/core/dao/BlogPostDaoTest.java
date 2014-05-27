@@ -4,9 +4,9 @@ import fi.evident.blogular.core.config.CoreTestConfiguration;
 import fi.evident.blogular.core.model.BlogPost;
 import fi.evident.blogular.core.model.EditedPostData;
 import fi.evident.blogular.core.model.NewPostData;
+import fi.evident.blogular.core.test.TestDataService;
 import fi.evident.dalesbred.Database;
 import fi.evident.dalesbred.NonUniqueResultException;
-import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +29,9 @@ public class BlogPostDaoTest {
     @Autowired
     private Database db;
 
+    @Autowired
+    private TestDataService testDataService;
+
     @Before
     public void cleanPosts() {
         db.update("DELETE FROM blog_post");
@@ -36,7 +39,7 @@ public class BlogPostDaoTest {
 
     @Test
     public void savePostAndFindIt() {
-        NewPostData data = arbitraryPostData();
+        NewPostData data = testDataService.arbitraryNewPostData();
         blogPostDao.savePost("my-slug", data);
 
         BlogPost post = blogPostDao.findBySlug("my-slug");
@@ -53,9 +56,9 @@ public class BlogPostDaoTest {
     public void findAllPostsReturnsPostsInReverseOrder() {
         assertThat(blogPostDao.findAllPosts().size(), is(0));
 
-        blogPostDao.savePost("slug1", arbitraryPostData());
-        blogPostDao.savePost("slug2", arbitraryPostData());
-        blogPostDao.savePost("slug3", arbitraryPostData());
+        blogPostDao.savePost("slug1", testDataService.arbitraryNewPostData());
+        blogPostDao.savePost("slug2", testDataService.arbitraryNewPostData());
+        blogPostDao.savePost("slug3", testDataService.arbitraryNewPostData());
 
         List<BlogPost> posts = blogPostDao.findAllPosts();
         assertThat(posts.size(), is(3));
@@ -66,7 +69,7 @@ public class BlogPostDaoTest {
 
     @Test
     public void deletePost() {
-        blogPostDao.savePost("my-slug", arbitraryPostData());
+        blogPostDao.savePost("my-slug", testDataService.arbitraryNewPostData());
         assertThat(blogPostDao.containsPostBySlug("my-slug"), is(true));
 
         blogPostDao.deleteBySlug("my-slug");
@@ -75,9 +78,9 @@ public class BlogPostDaoTest {
 
     @Test
     public void updatePost() {
-        blogPostDao.savePost("my-slug", arbitraryPostData());
+        blogPostDao.savePost("my-slug", testDataService.arbitraryNewPostData());
 
-        EditedPostData data = arbitraryEditedData();
+        EditedPostData data = testDataService.arbitraryEditedData();
         blogPostDao.updatePost("my-slug", data);
 
         BlogPost post = blogPostDao.findBySlug("my-slug");
@@ -88,23 +91,6 @@ public class BlogPostDaoTest {
 
     @Test(expected = NonUniqueResultException.class)
     public void updateNonexistentPost() {
-        blogPostDao.updatePost("unknown", arbitraryEditedData());
-    }
-
-    @NotNull
-    private static NewPostData arbitraryPostData() {
-        NewPostData data = new NewPostData();
-        data.author = "my author";
-        data.body = "my post body";
-        data.title = "my title";
-        return data;
-    }
-
-    @NotNull
-    private static EditedPostData arbitraryEditedData() {
-        EditedPostData data = new EditedPostData();
-        data.title = "edited title";
-        data.body = "edited body";
-        return data;
+        blogPostDao.updatePost("unknown", testDataService.arbitraryEditedData());
     }
 }
