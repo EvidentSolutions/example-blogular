@@ -58,7 +58,7 @@ var paths = {
 var handleErrors = function() {
     // Send error to notification center with gulp-notify
     notify.onError({
-        title: "Compile Error",
+        title: "Build Error",
         message: "<%= error.message %>"
     }).apply(this, arguments);
 
@@ -139,14 +139,14 @@ gulp.task('serve', ['watch'], function() {
         res.sendfile(path.join(paths.build.dest, 'index.html'));
     });
 
-    http.createServer(app).listen(config.port);
+    http.createServer(app).listen(config.port).on('error', handleErrors);
     gutil.log("Started development server:", gutil.colors.magenta("http://localhost:" + config.port + "/"));
 
     /** @type Object */
     var lrServer = livereload();
-    gulp.watch([path.join(paths.build.dest, '**'), './src/templates/**']).on('change', function(file) {
-        lrServer.changed(file.path);
-    });
+    gulp.watch([path.join(paths.build.dest, '**'), './src/templates/**'])
+        .on('change', function(file) { lrServer.changed(file.path);})
+        .on('error', handleErrors);
 });
 
 // Starts a server and opens browser
@@ -157,7 +157,7 @@ gulp.task('open-browser', ['serve'], function(cb) {
         app: "Google Chrome"
     };
 
-    gulp.src(path.join(paths.build.dest, 'index.html')).pipe(gulpOpen("", options));
+    gulp.src(path.join(paths.build.dest, 'index.html')).pipe(gulpOpen("", options)).on('error', handleErrors);
     cb();
 });
 
@@ -222,7 +222,8 @@ gulp.task('compile-views', function() {
         .pipe(rename(function(path) {
             path.extname = '.html';
         }))
-        .pipe(gulp.dest(paths.build.dest));
+        .pipe(gulp.dest(paths.build.dest))
+        .on('error', handleErrors);
 });
 
 // Compiles angular templates to a single JavaScript module which populates the template-cache
@@ -234,7 +235,8 @@ gulp.task('compile-angular-templates', function () {
             'root': '/templates/'
         }))
         .pipe(size({showFiles: true}))
-        .pipe(gulp.dest(paths.build.tmp));
+        .pipe(gulp.dest(paths.build.tmp))
+        .on('error', handleErrors);
 });
 
 gulp.task('test', function() {
