@@ -4,7 +4,6 @@ import fi.evident.blogular.core.config.CoreTestConfiguration;
 import fi.evident.blogular.core.dao.BlogPostDao;
 import fi.evident.blogular.core.model.NewPostData;
 import fi.evident.blogular.core.test.TestDataService;
-import fi.evident.dalesbred.Database;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,14 +25,11 @@ public class PostServiceTest {
     private BlogPostDao blogPostDao;
 
     @Autowired
-    private Database db;
-
-    @Autowired
     private TestDataService testDataService;
 
     @Before
     public void cleanPosts() {
-        db.update("DELETE FROM blog_post");
+        testDataService.clearPosts();
     }
 
     @Test

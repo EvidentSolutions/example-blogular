@@ -4,9 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fi.evident.blogular.core.dao.BlogPostDao;
 import fi.evident.blogular.core.model.BlogPost;
 import fi.evident.blogular.core.model.NewPostData;
+import fi.evident.blogular.core.test.TestDataService;
 import fi.evident.blogular.web.config.WebTestConfiguration;
-import fi.evident.dalesbred.Database;
-import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,12 +44,12 @@ public class PostsControllerTest {
     private BlogPostDao postDao;
 
     @Autowired
-    private Database db;
-
-    @Autowired
     private ObjectMapper objectMapper;
 
     private MockMvc mvc;
+
+    @Autowired
+    private TestDataService testDataService;
 
     @Before
     @SuppressWarnings("SpellCheckingInspection")
@@ -58,13 +57,14 @@ public class PostsControllerTest {
         mvc = webAppContextSetup(wac)
             .defaultRequest(get("/").header("Authorization", "Basic dXNlcjpwYXNzd29yZA=="))
             .addFilters(springSecurityFilterChain).build();
-        db.update("delete from blog_post");
+
+        testDataService.clearPosts();
     }
 
     @Test
     public void listBlogPosts() throws Exception {
-        createArbitraryPostWithSlug("hello-world");
-        createArbitraryPostWithSlug("goodbye-world");
+        testDataService.createArbitraryPostWithSlug("hello-world");
+        testDataService.createArbitraryPostWithSlug("goodbye-world");
 
         mvc.perform(get("/api/posts"))
                 .andExpect(status().isOk())
@@ -74,7 +74,7 @@ public class PostsControllerTest {
 
     @Test
     public void postBlogPost() throws Exception {
-        String json = objectMapper.writeValueAsString(postWithTitleAndBody("My test post", "My post body"));
+        String json = objectMapper.writeValueAsString(testDataService.arbitraryNewPostDataWithTitleAndBody("My test post", "My post body"));
 
         mvc.perform(post("/api/posts").contentType(APPLICATION_JSON).content(json))
                 .andExpect(status().isCreated())
@@ -93,7 +93,7 @@ public class PostsControllerTest {
 
     @Test
     public void getPostBySlug() throws Exception {
-        NewPostData post = postWithTitleAndBody("Title of test", "My body");
+        NewPostData post = testDataService.arbitraryNewPostDataWithTitleAndBody("Title of test", "My body");
         postDao.savePost("my-test-post", post);
 
         mvc.perform(get("/api/posts/my-test-post"))
@@ -113,7 +113,7 @@ public class PostsControllerTest {
 
     @Test
     public void deletePostBySlug() throws Exception {
-        createArbitraryPostWithSlug("my-test-post");
+        testDataService.createArbitraryPostWithSlug("my-test-post");
 
         mvc.perform(delete("/api/posts/my-test-post"))
                 .andExpect(status().isOk());
@@ -123,7 +123,7 @@ public class PostsControllerTest {
 
     @Test
     public void uniqueSlugsAreGeneratedForIdenticalTitles() throws Exception {
-        String json = objectMapper.writeValueAsString(postWithTitleAndBody("My test post", "My post body"));
+        String json = objectMapper.writeValueAsString(testDataService.arbitraryNewPostDataWithTitleAndBody("My test post", "My post body"));
 
         mvc.perform(post("/api/posts").contentType(APPLICATION_JSON).content(json)).andExpect(status().isCreated());
         mvc.perform(post("/api/posts").contentType(APPLICATION_JSON).content(json)).andExpect(status().isCreated());
@@ -134,23 +134,5 @@ public class PostsControllerTest {
         assertThat(posts.get(0).slug, is("my-test-post-3"));
         assertThat(posts.get(1).slug, is("my-test-post-2"));
         assertThat(posts.get(2).slug, is("my-test-post"));
-    }
-
-    private void createArbitraryPostWithSlug(@NotNull String slug) {
-        postDao.savePost(slug, postWithTitle("Title of test"));
-    }
-
-    @NotNull
-    private static NewPostData postWithTitle(@NotNull String title) {
-        return postWithTitleAndBody(title, "Body for post " + title);
-    }
-
-    @NotNull
-    private static NewPostData postWithTitleAndBody(@NotNull String title, @NotNull String body) {
-        NewPostData post = new NewPostData();
-        post.title = title;
-        post.body = body;
-        post.author = "My author";
-        return post;
     }
 }

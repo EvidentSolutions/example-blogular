@@ -5,7 +5,6 @@ import fi.evident.blogular.core.model.BlogPost;
 import fi.evident.blogular.core.model.EditedPostData;
 import fi.evident.blogular.core.model.NewPostData;
 import fi.evident.blogular.core.test.TestDataService;
-import fi.evident.dalesbred.Database;
 import fi.evident.dalesbred.NonUniqueResultException;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,14 +26,11 @@ public class BlogPostDaoTest {
     private BlogPostDao blogPostDao;
 
     @Autowired
-    private Database db;
-
-    @Autowired
     private TestDataService testDataService;
 
     @Before
     public void cleanPosts() {
-        db.update("DELETE FROM blog_post");
+        testDataService.clearPosts();
     }
 
     @Test
@@ -56,9 +52,9 @@ public class BlogPostDaoTest {
     public void findAllPostsReturnsPostsInReverseOrder() {
         assertThat(blogPostDao.findAllPosts().size(), is(0));
 
-        blogPostDao.savePost("slug1", testDataService.arbitraryNewPostData());
-        blogPostDao.savePost("slug2", testDataService.arbitraryNewPostData());
-        blogPostDao.savePost("slug3", testDataService.arbitraryNewPostData());
+        testDataService.createArbitraryPostWithSlug("slug1");
+        testDataService.createArbitraryPostWithSlug("slug2");
+        testDataService.createArbitraryPostWithSlug("slug3");
 
         List<BlogPost> posts = blogPostDao.findAllPosts();
         assertThat(posts.size(), is(3));
@@ -69,7 +65,7 @@ public class BlogPostDaoTest {
 
     @Test
     public void deletePost() {
-        blogPostDao.savePost("my-slug", testDataService.arbitraryNewPostData());
+        testDataService.createArbitraryPostWithSlug("my-slug");
         assertThat(blogPostDao.containsPostBySlug("my-slug"), is(true));
 
         blogPostDao.deleteBySlug("my-slug");
