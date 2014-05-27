@@ -37,6 +37,7 @@ public class DummyDataPopulator {
         log.info("Populating database with dummy data");
 
         createPost("Exercises", "classpath:initial-data/exercises.md");
+        createPost("Tests", "classpath:initial-data/tests.md");
         createPost("Dialogs", "classpath:initial-data/dialogs.md");
         createPost("Filters", "classpath:initial-data/filters.md");
         createPost("Directives", "classpath:initial-data/directives.md");
