@@ -11,7 +11,6 @@ var express         = require('express');
 var http            = require('http');
 var morgan          = require('morgan');
 var livereload      = require('gulp-livereload');
-var gulpOpen        = require('gulp-open');
 var sass            = require('gulp-sass');
 var size            = require('gulp-size');
 var notify          = require('gulp-notify');
@@ -30,10 +29,18 @@ var karma           = require('gulp-karma');
 var watchify        = require('watchify');
 
 var config = {
+    // Build production version? 'true' will produce optimized assets, 'false' will leave debugging information.
+    // Note that generally you don't need to touch this but just call 'build-production' task.
     production: false,
+
+    // Should we start watching for changes?
+    watch: true,
+
+    // Port of the development server
     port: '3000'
 };
 
+// Paths for various assets.
 var paths = {
     sass: './src/css/*.scss',
     templates: './src/templates/**/*.html',
@@ -66,7 +73,9 @@ var handleErrors = function() {
     this.emit('end');
 };
 
-// Prepare externalLibraries from package.json:
+// Read 'package.json' to see which external libraries we are using and mark them
+// as external libraries for browserify. This lets us produce different bundles for
+// external libraries and our own code, making the incremental builds faster.
 var externalLibraries = [];
 var browserDependencies = require('./package.json').browser;
 for (var key in browserDependencies) {
@@ -74,8 +83,10 @@ for (var key in browserDependencies) {
         externalLibraries.push(key);
 }
 
-gulp.task('compile-libs',function () {
+// Create a bundle containing all external libraries.
+gulp.task('compile-libs', function () {
 
+    /* @type {Object} */
     var bundler = browserify();
     bundler.transform(browserifyShim);
     bundler.require(externalLibraries);
@@ -87,7 +98,7 @@ gulp.task('compile-libs',function () {
         .pipe(gulp.dest(path.join(paths.build.dest, 'js')));
 });
 
-// Compiles JavaScript from ES6 to ES5 and bundles everything into a single file.
+// Create a bundle containing our own dependencies.
 gulp.task('compile-js', ['compile-libs', 'compile-angular-templates'], function () {
 
     // Variables which will be inlined to src/js/config.js
@@ -97,12 +108,13 @@ gulp.task('compile-js', ['compile-libs', 'compile-angular-templates'], function 
         DEBUG_LOGGING: !config.production
     };
 
-    var ify = config.production ? browserify : watchify;
+    var ify = config.watch ? watchify : browserify;
 
-    var bundler = ify('./src/js/main.js')
-        .transform(browserifyShim)
-        .transform(es6ify.configure(/^(?!.*(node_modules|bower_components))+.+\.js$/))
-        .transform(envifyCustom(env));
+    /* @type {Object} */
+    var bundler = ify('./src/js/main.js');
+    bundler.transform(browserifyShim);
+    bundler.transform(es6ify.configure(/^(?!.*(node_modules|bower_components))+.+\.js$/));
+    bundler.transform(envifyCustom(env));
 
     bundler.external(externalLibraries);
 
@@ -147,18 +159,6 @@ gulp.task('serve', ['watch'], function() {
     gulp.watch([path.join(paths.build.dest, '**'), './src/templates/**'])
         .on('change', function(file) { lrServer.changed(file.path);})
         .on('error', handleErrors);
-});
-
-// Starts a server and opens browser
-gulp.task('open-browser', ['serve'], function(cb) {
-
-    var options = {
-        url: "http://localhost:" + config.port,
-        app: "Google Chrome"
-    };
-
-    gulp.src(path.join(paths.build.dest, 'index.html')).pipe(gulpOpen("", options)).on('error', handleErrors);
-    cb();
 });
 
 // Compiles Sass stylesheets to CSS
@@ -239,6 +239,7 @@ gulp.task('compile-angular-templates', function () {
         .on('error', handleErrors);
 });
 
+// Runs JavaScript unit tests
 gulp.task('test', function() {
     return gulp.src("./test/unit/**/*_spec.js")
         .pipe(karma({
@@ -248,6 +249,7 @@ gulp.task('test', function() {
         .on('error', handleErrors);
 });
 
+// Runs JavaScript end-to-end tests. Requires that the application and webdriver-manager are running.
 gulp.task('test-e2e', function() {
     return gulp.src(["./test/e2e/**/*_spec.js"])
         .pipe(protractor({
@@ -277,12 +279,14 @@ gulp.task('build-optimized', ['build'], function() {
 // Creates a production build
 gulp.task('build-production', ['clean'], function() {
     config.production = true;
+    config.watch = false;
     gulp.start('build-optimized');
 });
 
 // Creates a development build
 gulp.task('build-development', ['clean'], function() {
     config.production = false;
+    config.watch = false;
     gulp.start('build');
 });
 
