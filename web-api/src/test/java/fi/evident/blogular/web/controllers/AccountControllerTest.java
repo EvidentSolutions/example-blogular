@@ -1,5 +1,6 @@
 package fi.evident.blogular.web.controllers;
 
+import fi.evident.blogular.web.config.WebTestConfiguration;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +18,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = ControllerTestConfiguration.class)
+@ContextConfiguration(classes = WebTestConfiguration.class)
 public class AccountControllerTest {
 
     @Autowired

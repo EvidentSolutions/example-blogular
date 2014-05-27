@@ -1,5 +1,6 @@
 package fi.evident.blogular.core.dao;
 
+import fi.evident.blogular.core.config.CoreTestConfiguration;
 import fi.evident.blogular.core.model.BlogPost;
 import fi.evident.blogular.core.model.EditedPostData;
 import fi.evident.blogular.core.model.NewPostData;
@@ -19,7 +20,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = DaoTestConfiguration.class)
+@ContextConfiguration(classes = CoreTestConfiguration.class)
 public class BlogPostDaoTest {
 
     @Autowired

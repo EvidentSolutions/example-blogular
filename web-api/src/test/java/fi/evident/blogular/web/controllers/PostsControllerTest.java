@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fi.evident.blogular.core.dao.BlogPostDao;
 import fi.evident.blogular.core.model.BlogPost;
 import fi.evident.blogular.core.model.NewPostData;
+import fi.evident.blogular.web.config.WebTestConfiguration;
 import fi.evident.dalesbred.Database;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
@@ -30,7 +31,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = ControllerTestConfiguration.class)
+@ContextConfiguration(classes = WebTestConfiguration.class)
 public class PostsControllerTest {
 
     @Autowired

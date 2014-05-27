@@ -1,6 +1,5 @@
-package fi.evident.blogular.core.dao;
+package fi.evident.blogular.core.config;
 
-import fi.evident.blogular.core.config.RootConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -10,10 +9,10 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 @Configuration
 @Import(RootConfig.class)
-public class DaoTestConfiguration {
+public class CoreTestConfiguration {
 
     @Bean(destroyMethod = "shutdown")
     public EmbeddedDatabase dataSource() {
-        return new EmbeddedDatabaseBuilder().setName("database-tests").setType(EmbeddedDatabaseType.HSQL).addScript("db/misc/hsql-pg-mode.sql").build();
+        return new EmbeddedDatabaseBuilder().setName("core-tests").setType(EmbeddedDatabaseType.HSQL).addScript("db/misc/hsql-pg-mode.sql").build();
     }
 }
