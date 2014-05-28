@@ -16,8 +16,7 @@ require('angular/resource');
 require('angular/animate');
 require('angular/i18n/angular-locale_fi');
 
-// Bootstrap and AngularJS integration for it
-require('bootstrap');
+// AngularJS integration for Bootstrap
 require('angular-bootstrap/ui-bootstrap-tpls');
 
 // Workaround for bugs

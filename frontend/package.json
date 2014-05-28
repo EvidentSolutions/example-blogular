@@ -73,7 +73,6 @@
     "angular/mocks": "./bower_components/angular-mocks/angular-mocks.js",
     "angular/i18n/angular-locale_fi": "./bower_components/angular-i18n/angular-locale_fi.js",
     "angular-bootstrap/ui-bootstrap-tpls": "./bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
-    "bootstrap": "./bower_components/bootstrap/dist/js/bootstrap.js",
     "sockjs": "./bower_components/sockjs/sockjs.js",
     "stomp": "./bower_components/stomp-websocket/lib/stomp.js",
     "epiceditor": "./bower_components/epiceditor/src/editor.js",
