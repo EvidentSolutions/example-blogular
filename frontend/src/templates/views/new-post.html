@@ -4,7 +4,7 @@
 
     <div class="form-group">
         <div class="col-sm-12">
-            <input type="text" class="form-control" id="inputPostTitle" ng-model="newPost.title" autofocus required placeholder="Title" ng-disabled="saving">
+            <input type="text" class="form-control" id="inputPostTitle" ng-model="newPost.title" autofocus required placeholder="Title">
         </div>
     </div>
 
@@ -16,12 +16,12 @@
 
     <div class="form-group">
         <div class="col-sm-12">
-            <button ng-disabled="saving || postForm.$invalid" class="btn btn-primary" ng-click="savePost()">Post</button>
+            <button ng-disabled="postForm.$invalid" class="btn btn-primary" ng-click="savePost()">Post</button>
         </div>
     </div>
 </form>
 
 <div ng-if="saving">
     <p>Publishing your post...</p>
-    <progress ng-if="saving"></progress>
+    <progress></progress>
 </div>
