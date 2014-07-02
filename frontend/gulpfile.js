@@ -228,7 +228,7 @@ gulp.task('compile-views', function() {
 
 // Compiles angular templates to a single JavaScript module which populates the template-cache
 gulp.task('compile-angular-templates', function () {
-    gulp.src(paths.templates)
+    return gulp.src(paths.templates)
         .pipe(templateCache({
             'module': 'blogular.templates',
             'standalone': true,
