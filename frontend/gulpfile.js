@@ -87,12 +87,16 @@ for (var key in browserDependencies) {
 gulp.task('compile-libs', function () {
 
     /* @type {Object} */
-    var bundler = browserify();
+    var bundler = browserify({debug: !config.production});
     bundler.transform(browserifyShim);
-    bundler.require(externalLibraries);
+
+    for (var key in browserDependencies)
+        if (browserDependencies.hasOwnProperty(key) && /^\.\/(node_modules|bower_components)\/.+$/.test(browserDependencies[key]))
+            bundler.require(browserDependencies[key], {expose: key});
+
     bundler.on('error', handleErrors);
 
-    return bundler.bundle({debug: !config.production})
+    return bundler.bundle()
         .on('error', handleErrors)
         .pipe(source('libs.js'))
         .pipe(gulpif(config.production, streamify(uglify())))
@@ -109,10 +113,11 @@ gulp.task('compile-js', ['compile-libs', 'compile-angular-templates'], function 
         DEBUG_LOGGING: !config.production
     };
 
-    var ify = config.watch ? watchify : browserify;
-
     /* @type {Object} */
-    var bundler = ify('./src/js/main.js');
+    var bundler = browserify('./src/js/main.js', {debug: config.production, cache: {}, packageCache: {}, fullPaths: true});
+    if (config.watch)
+        bundler = watchify(bundler);
+
     bundler.transform(browserifyShim);
     bundler.transform(es6ify.configure(/^(?!.*(node_modules|bower_components))+.+\.js$/));
     bundler.transform(envifyCustom(env));
@@ -128,7 +133,7 @@ gulp.task('compile-js', ['compile-libs', 'compile-angular-templates'], function 
     bundler.on('error', handleErrors);
 
     function rebundle() {
-        return bundler.bundle({debug: !config.production})
+        return bundler.bundle()
             .on('error', handleErrors)
             .pipe(source('app.js'))
             .pipe(gulpif(config.production, streamify(uglify())))
