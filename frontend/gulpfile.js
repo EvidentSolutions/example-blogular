@@ -90,6 +90,7 @@ gulp.task('compile-libs', function () {
     var bundler = browserify();
     bundler.transform(browserifyShim);
     bundler.require(externalLibraries);
+    bundler.on('error', handleErrors);
 
     return bundler.bundle({debug: !config.production})
         .on('error', handleErrors)
@@ -123,6 +124,8 @@ gulp.task('compile-js', ['compile-libs', 'compile-angular-templates'], function 
         msg = msg.replace(/\d+(\.\d*)? seconds*/g, function (m) { return gutil.colors.magenta(m); });
         gutil.log("watchify:", gutil.colors.blue('app.js'), msg);
     });
+
+    bundler.on('error', handleErrors);
 
     function rebundle() {
         return bundler.bundle({debug: !config.production})
