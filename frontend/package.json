@@ -47,7 +47,6 @@
     "epiceditor": "./bower_components/epiceditor/src/editor.js",
     "marked": "./bower_components/marked/lib/marked.js",
     "jquery": "./bower_components/jquery/dist/jquery.js",
-    "lodash": "./bower_components/lodash/dist/lodash.min.js",
-    "traceur-runtime": "./node_modules/evident-gulp-build/node_modules/es6ify/node_modules/traceur/bin/traceur-runtime.js"
+    "lodash": "./bower_components/lodash/dist/lodash.min.js"
   }
 }
