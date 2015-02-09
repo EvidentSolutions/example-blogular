@@ -143,14 +143,12 @@ gulp.task('serve', ['watch'], function() {
 
     app.use(morgan('dev'));
     app.use(express.static(paths.build.dest));
+    //app.use('/font-awesome', express.static(paths.build.dest)); // hack
     app.use('/templates', express.static('./src/templates'));
 
-    //noinspection JSCheckFunctionSignatures
-    app.get(/^\/(post|posts|login)(\/.*)?$/, function(req, res) {
-        //noinspection JSCheckFunctionSignatures
-        res.sendfile(path.join(paths.build.dest, 'index.html'));
-    });
+    app.use(/^\/(post|posts|login)(\/.*)?$/, express.static(path.join(paths.build.dest, 'index.html')));
 
+    //noinspection JSUnresolvedFunction
     http.createServer(app).listen(config.port).on('error', handleErrors);
     gutil.log("Started development server:", gutil.colors.magenta("http://localhost:" + config.port + "/"));
 
