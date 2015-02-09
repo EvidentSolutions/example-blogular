@@ -1,40 +1,44 @@
 <component name="ArtifactManager">
   <artifact type="war" name="Gradle : blogular:web-api : web-api.war">
     <output-path>$PROJECT_DIR$/classes/artifacts/web-api</output-path>
+    <properties id="gradle-properties">
+      <options external-project-path="$PROJECT_DIR$/web-api" />
+    </properties>
     <root id="archive" name="web-api.war">
       <element id="javaee-facet-resources" facet="web-api/web/Web Gradle : web-api.war" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="web-api" />
+          <element id="dir-copy" path="$PROJECT_DIR$/web-api/build/resources/main" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Gradle: spring-webmvc-4.0.3.RELEASE" />
-          <element id="library" level="project" name="Gradle: spring-tx-4.0.3.RELEASE" />
-          <element id="library" level="project" name="Gradle: spring-jdbc-4.0.3.RELEASE" />
-          <element id="library" level="project" name="Gradle: spring-context-support-4.0.3.RELEASE" />
-          <element id="library" level="project" name="Gradle: spring-websocket-4.0.3.RELEASE" />
-          <element id="library" level="project" name="Gradle: spring-messaging-4.0.3.RELEASE" />
-          <element id="library" level="project" name="Gradle: jackson-databind-2.3.3" />
-          <element id="library" level="project" name="Gradle: dalesbred-0.6.0" />
-          <element id="library" level="project" name="Gradle: flyway-core-3.0" />
-          <element id="library" level="project" name="Gradle: annotations-13.0" />
-          <element id="library" level="project" name="Gradle: slf4j-api-1.7.7" />
-          <element id="library" level="project" name="Gradle: spring-core-4.0.3.RELEASE" />
-          <element id="library" level="project" name="Gradle: spring-beans-4.0.3.RELEASE" />
-          <element id="library" level="project" name="Gradle: spring-expression-4.0.3.RELEASE" />
-          <element id="library" level="project" name="Gradle: aopalliance-1.0" />
-          <element id="library" level="project" name="Gradle: spring-aop-4.0.3.RELEASE" />
-          <element id="library" level="project" name="Gradle: spring-context-4.0.3.RELEASE" />
-          <element id="library" level="project" name="Gradle: spring-web-4.0.3.RELEASE" />
-          <element id="library" level="project" name="Gradle: jackson-annotations-2.3.0" />
-          <element id="library" level="project" name="Gradle: jackson-core-2.3.3" />
-          <element id="library" level="project" name="Gradle: jcl-over-slf4j-1.7.7" />
-          <element id="library" level="project" name="Gradle: logback-classic-1.1.2" />
-          <element id="library" level="project" name="Gradle: hsqldb-2.3.2" />
-          <element id="library" level="project" name="Gradle: logback-core-1.1.2" />
-          <element id="library" level="project" name="Gradle: spring-security-web-3.2.3.RELEASE" />
-          <element id="library" level="project" name="Gradle: spring-security-core-3.2.3.RELEASE" />
-          <element id="library" level="project" name="Gradle: spring-security-config-3.2.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-webmvc:4.0.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-tx:4.0.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-jdbc:4.0.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-context-support:4.0.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-websocket:4.0.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-messaging:4.0.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework.security:spring-security-web:3.2.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework.security:spring-security-config:3.2.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.3.3" />
+          <element id="library" level="project" name="Gradle: fi.evident.dalesbred:dalesbred:0.6.0" />
+          <element id="library" level="project" name="Gradle: org.flywaydb:flyway-core:3.0" />
+          <element id="library" level="project" name="Gradle: org.jetbrains:annotations:13.0" />
+          <element id="library" level="project" name="Gradle: org.slf4j:slf4j-api:1.7.7" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-core:4.0.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-beans:4.0.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-expression:4.0.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: aopalliance:aopalliance:1.0" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-aop:4.0.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-context:4.0.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-web:4.0.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework.security:spring-security-core:3.2.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.3.0" />
+          <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.3.3" />
+          <element id="library" level="project" name="Gradle: org.slf4j:jcl-over-slf4j:1.7.7" />
+          <element id="library" level="project" name="Gradle: ch.qos.logback:logback-classic:1.1.2" />
+          <element id="library" level="project" name="Gradle: org.hsqldb:hsqldb:2.3.2" />
+          <element id="library" level="project" name="Gradle: ch.qos.logback:logback-core:1.1.2" />
         </element>
       </element>
       <element id="directory" name="META-INF">
