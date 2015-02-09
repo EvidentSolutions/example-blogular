@@ -6,7 +6,7 @@ controllers.controller('LoginController', ['$scope', '$modal', '$location', 'log
 
     $scope.login = () => {
         $modal.open({
-            templateUrl: '/templates/dialogs/login.html',
+            templateUrl: '/dialogs/login.html',
             controller: ['$scope', '$modalInstance', ($scope, $modalInstance) => {
                 $scope.loggingIn = false;
                 $scope.loginFailed = false;

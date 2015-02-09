@@ -6,11 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/css/vendor-bundle.css" type="text/css">
     <link rel="stylesheet" href="/css/default.css" type="text/css">
-    <script type="text/javascript" src="/js/libs.js"></script>
-    <script type="text/javascript" src="/js/app.js"></script>
 </head>
 <body>
-  <ng-include src="'/templates/nav/topnav.html'"></ng-include>
+  <ng-include src="'/nav/topnav.html'"></ng-include>
 
   <div class="container">
       <header class="blog-header"></header>
@@ -19,10 +17,17 @@
           <div class="col-sm-8 blog-main">
               <div class="main-view" ng-view></div>
           </div>
-          <nav class="col-sm-3 col-sm-offset-1 blog-sidebar" ng-include="'/templates/nav/sidebar.html'"></nav>
+          <nav class="col-sm-3 col-sm-offset-1 blog-sidebar" ng-include="'/nav/sidebar.html'"></nav>
       </div>
   </div>
 
   <div class="blog-footer"></div>
+
+{{#if staticBundle}}
+  <script type="text/javascript" src="{{assetUrl}}/js/bundle.js"></script>
+{{else}}
+  <script type="text/javascript" src="{{assetUrl}}/js/libs.js"></script>
+  <script type="text/javascript" src="{{assetUrl}}/js/app.js"></script>
+{{/if}}
 </body>
 </html>

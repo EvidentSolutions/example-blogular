@@ -43,8 +43,8 @@ var angularModules = [
 // the same JavaScript file as the code. The built 'templates' module contains an angular
 // module which will populate Angular's template-cache during startup.
 if (config.useTemplateCache) {
-    require('templates');
-    angularModules.push('blogular.templates');
+    require('angular-templates');
+    angularModules.push('angular-templates');
 }
 
 // Finally we are ready to initialize our Angular application

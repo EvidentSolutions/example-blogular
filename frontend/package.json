@@ -5,7 +5,7 @@
   "version": "0.0.0",
   "devDependencies": {
     "gulp": "3.6.2",
-    "evident-gulp-build": "0.0.0"
+    "evident-gulp-build": "0.0.1"
   },
   "browserify-shim": {
     "angular": {
@@ -48,7 +48,6 @@
     "marked": "./bower_components/marked/lib/marked.js",
     "jquery": "./bower_components/jquery/dist/jquery.js",
     "lodash": "./bower_components/lodash/dist/lodash.min.js",
-    "traceur-runtime": "./node_modules/evident-gulp-build/node_modules/es6ify/node_modules/traceur/bin/traceur-runtime.js",
-    "templates": "./build/gulp/tmp/templates.js"
+    "traceur-runtime": "./node_modules/evident-gulp-build/node_modules/es6ify/node_modules/traceur/bin/traceur-runtime.js"
   }
 }
