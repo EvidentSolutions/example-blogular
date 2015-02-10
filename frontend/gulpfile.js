@@ -1,4 +1,4 @@
 "use strict";
 
-var evidentBuild = require('evident-gulp-build');
-evidentBuild.settings.indexPagePattern = /^\/(post|posts|login)(\/.*)?$/;
+var settings = require('evident-gulp-build').settings;
+settings.indexPagePattern = /^\/(post|posts|login)(\/.*)?$/;

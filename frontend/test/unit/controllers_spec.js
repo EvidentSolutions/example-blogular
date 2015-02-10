@@ -5,7 +5,7 @@ window.__browserify_shim_require__ = require;
 
 require('angular');
 require('angular/mocks');
-require('../../src/js/controllers/controllers');
+require('../../app/js/controllers/controllers');
 
 describe('controllers', () => {
     describe('SidebarController', () => {
