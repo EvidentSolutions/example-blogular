@@ -62,7 +62,7 @@ module.exports = function (config) {
         singleRun: false,
 
         browserify: {
-            transform: ['browserify-shim', 'es6ify']
+            transform: ['evident-gulp-build/node_modules/browserify-shim', 'evident-gulp-build/node_modules/es6ify']
         }
     });
 };
