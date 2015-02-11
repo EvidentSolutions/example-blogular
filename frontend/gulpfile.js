@@ -7,6 +7,7 @@ var path = require('path');
 var gulpBuild = require('evident-gulp-build');
 var settings = gulpBuild.settings;
 
+settings.paths.entryPoint = './app/js/main.js';
 settings.variables.API_BASE = 'http://localhost:8080/api';
 
 settings.serve.indexPagePattern = /^\/(post|posts|login)(\/.*)?$/;
