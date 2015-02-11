@@ -4,6 +4,6 @@
 // We use envify to replace values of form 'process.env.FOO' by constants.
 module.exports = {
     apiBase: process.env.API_BASE,
-    useTemplateCache: process.env.USE_TEMPLATE_CACHE,
-    debugLogging: process.env.DEBUG_LOGGING
+    useTemplateCache: process.env.staticBundle,
+    debugLogging: !process.env.staticBundle
 };
