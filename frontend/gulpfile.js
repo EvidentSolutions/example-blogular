@@ -7,7 +7,7 @@ var path = require('path');
 var gulpBuild = require('evident-gulp-build');
 var settings = gulpBuild.settings;
 
-settings.indexPagePattern = /^\/(post|posts|login)(\/.*)?$/;
+settings.serve.indexPagePattern = /^\/(post|posts|login)(\/.*)?$/;
 
 settings.paths.vendorStylesheets = [
     './bower_components/bootstrap/dist/css/bootstrap.min.css',
@@ -18,12 +18,14 @@ settings.paths.vendorStylesheets = [
 // Creates a production build
 gulp.task('build-production', ['clean'], function() {
     settings.staticBundle = true;
+    settings.minimized = true;
     gulp.start('build-optimized');
 });
 
 // Creates a development build
 gulp.task('build-development', ['clean'], function() {
     settings.staticBundle = false;
+    settings.minimized = false;
     gulp.start('build');
 });
 
