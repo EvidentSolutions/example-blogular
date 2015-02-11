@@ -7,6 +7,8 @@ var path = require('path');
 var gulpBuild = require('evident-gulp-build');
 var settings = gulpBuild.settings;
 
+settings.variables.API_BASE = 'http://localhost:8080/api';
+
 settings.serve.indexPagePattern = /^\/(post|posts|login)(\/.*)?$/;
 
 settings.paths.vendorStylesheets = [
@@ -19,6 +21,7 @@ settings.paths.vendorStylesheets = [
 gulp.task('build-production', ['clean'], function() {
     settings.staticBundle = true;
     settings.minimized = true;
+    settings.variables.API_BASE = '/api';
     gulp.start('build-optimized');
 });
 
