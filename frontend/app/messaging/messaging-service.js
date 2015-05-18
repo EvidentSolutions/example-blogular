@@ -40,7 +40,10 @@ services.service('messagingService', ['$rootScope', '$q', '$log', ($rootScope, $
             var subscription = getStomp().then(stomp =>
                 stomp.subscribe(destination, message => {
                     $rootScope.$apply(() => {
-                        callback(angular.fromJson(message.body));
+                        var body = null;
+                        if (message.body)
+                            body = angular.fromJson(message.body);
+                        callback(body);
                     });
                 }));
 
