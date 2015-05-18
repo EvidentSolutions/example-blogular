@@ -20,9 +20,10 @@
     "marked": "0.2.10"
   },
   "devDependencies": {
-    "bower": "^1.4.1",
+    "bower": "1.4.1",
     "evident-gulp-build": "0.1.9",
-    "gulp": "3.8.7"
+    "gulp": "3.8.7",
+    "webdriver-manager": "5.0.0"
   },
   "browserify-shim": {
     "sockjs": {

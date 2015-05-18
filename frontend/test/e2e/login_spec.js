@@ -14,8 +14,8 @@ var FrontPage = function() {
 };
 
 var LoginDialog = function() {
-    this.usernameInput = element(by.model('form.username'));
-    this.passwordInput = element(by.model('form.password'));
+    this.usernameInput = element(by.model('loginModalCtrl.form.username'));
+    this.passwordInput = element(by.model('loginModalCtrl.form.password'));
     this.loginButton = element(by.css('.modal-dialog .btn-primary'));
     this.alert = element(by.css('.alert-warning'));
 

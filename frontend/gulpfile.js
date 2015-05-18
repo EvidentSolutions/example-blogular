@@ -34,4 +34,6 @@ gulp.task('build:production', ['egb:clean'], function() {
     gulp.start('build');
 });
 
-gulp.task('test', ['egb:test:unit', 'egb:test:e2e']);
+gulp.task('test:unit', ['egb:test:unit']);
+gulp.task('test:e2e', ['egb:test:e2e']);
+gulp.task('test', ['test:unit', 'test:e2e']);

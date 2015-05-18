@@ -54,7 +54,7 @@ in the `frontend`-directory before running gulp.)
 Unit-tests are using [Karma](http://karma-runner.github.io/). Run them by executing the following command
 in `frontend`-directory:
 
-    gulp test
+    gulp test:unit
 
 ## Running end-to-end tests
 
@@ -70,4 +70,4 @@ After this we can start Selenium server:
 When the server is running, we should start our application (e.g. using the method described in Quick-start)
 and then we can execute the tests against our application:
 
-    gulp test-e2e
+    gulp test:e2e
