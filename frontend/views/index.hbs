@@ -4,7 +4,7 @@
     <title>Blogular</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="/css/vendor-bundle.css" type="text/css">
+    <link rel="stylesheet" href="/css/vendor.css" type="text/css">
     <link rel="stylesheet" href="/css/default.css" type="text/css">
 </head>
 <body>
@@ -23,11 +23,7 @@
 
   <div class="blog-footer"></div>
 
-{{#if staticBundle}}
-  <script type="text/javascript" src="{{assetUrl}}/js/bundle.js"></script>
-{{else}}
-  <script type="text/javascript" src="{{assetUrl}}/js/libs.js"></script>
-  <script type="text/javascript" src="{{assetUrl}}/js/app.js"></script>
-{{/if}}
+<script type="text/javascript" src="{{assetUrl}}/js/vendor.js"></script>
+<script type="text/javascript" src="{{assetUrl}}/js/app.js"></script>
 </body>
 </html>

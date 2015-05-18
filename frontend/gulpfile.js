@@ -1,60 +1,48 @@
 "use strict";
 
 var gulp = require('gulp');
-var revall = require('gulp-rev-all');
 var path = require('path');
 
 var gulpBuild = require('evident-gulp-build');
+gulpBuild.registerDefaultTasks(gulp);
+
 var settings = gulpBuild.settings;
 
-settings.paths.entryPoint = './app/js/main.js';
-settings.variables.API_BASE = 'http://localhost:8080/api';
+settings.browserify.ignoredExternalLibraries = ['animate.css', 'font-awesome'];
+
+settings.revall.options.ignore = [/^\/favicon.ico$/g, /^\/index.html/g, /^css\/epiceditor\/.+/g];
 
 settings.serve.indexPagePattern = /^\/(post|posts|login)(\/.*)?$/;
 
-settings.paths.vendorStylesheets = [
-    './bower_components/bootstrap/dist/css/bootstrap.min.css',
-    './bower_components/font-awesome/css/font-awesome.min.css',
-    './bower_components/animate.css/animate.min.css'
+settings.css.vendorStylesheets = [
+    './node_modules/bootstrap/dist/css/bootstrap.min.css',
+    './node_modules/font-awesome/css/font-awesome.min.css',
+    './node_modules/animate.css/animate.min.css'
 ];
 
-// Creates a production build
-gulp.task('build-production', ['clean'], function() {
-    settings.staticBundle = true;
-    settings.minimized = true;
-    settings.variables.API_BASE = '/api';
-    gulp.start('build-optimized');
-});
+settings.fonts.vendorFonts = [
+    './node_modules/bootstrap/dist/fonts/*',
+    './node_modules/font-awesome/fonts/*'
+];
 
-// Creates a development build
-gulp.task('build-development', ['clean'], function() {
-    settings.staticBundle = false;
-    settings.minimized = false;
-    gulp.start('build');
-});
-
-// Create an optimized build
-gulp.task('build-optimized', ['build'], function() {
-    return gulp.src(path.join(settings.paths.output, 'static/**'))
-        .pipe(revall({ ignore: [/^index.html$/, /^css\/epiceditor\/.+/] }))
-        .pipe(gulp.dest(path.join(settings.paths.output, 'optimized')));
-});
-
-gulp.task('styles:copy-extra-resources', ['styles:copy-epic-editor', 'styles:copy-fonts']);
+gulp.task('egb:resources:build', ['egb:resources:copy-fonts', 'styles:copy-epic-editor']);
 
 gulp.task('styles:copy-epic-editor', function() {
     return gulp.src('./bower_components/epiceditor/epiceditor/**/*.css')
-        .pipe(gulp.dest(path.join(settings.paths.output, 'static/css/epiceditor')))
-        .on('error', gulpBuild.errorHandler);
+        .pipe(gulp.dest('./build/egb/static/css/epiceditor'));
 });
 
-// Copies fonts to proper place
-gulp.task('styles:copy-fonts', function() {
-    var fonts = [
-        './bower_components/bootstrap/dist/fonts/*',
-        './bower_components/font-awesome/fonts/*'
-    ];
-    return gulp.src(fonts)
-        .pipe(gulp.dest(path.join(settings.paths.output, 'static/fonts')))
-        .on('error', gulpBuild.errorHandler);
+Object.assign(settings.variables, {
+    API_BASE: 'http://localhost:8080/api'
+});
+
+gulp.task('build-production', ['clean'], function() {
+    Object.assign(settings.variables, {
+        API_BASE: '/api'
+    });
+
+    settings.staticBundle = true;
+    settings.minimized = true;
+    settings.variables.API_BASE = '/api';
+    gulp.start('build');
 });

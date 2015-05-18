@@ -3,10 +3,14 @@
   "description": "npm packages needed to build blogular",
   "private": true,
   "version": "0.0.0",
+  "dependencies": {
+    "animate.css": "3.2.5",
+    "bootstrap": "3.3.4",
+    "font-awesome": "4.3.0"
+  },
   "devDependencies": {
     "gulp": "3.8.7",
-    "gulp-rev-all": "0.2.1",
-    "evident-gulp-build": "0.0.8"
+    "evident-gulp-build": "0.1.9"
   },
   "browserify-shim": {
     "angular": {
