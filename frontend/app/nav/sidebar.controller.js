@@ -1,6 +1,6 @@
 "use strict";
 
-var controllers = require('angular').module('blogular.sidebar');
+var controllers = require('angular').module('blogular.nav');
 
 controllers.controller('SidebarController', ['$scope', 'postService', ($scope, postService) => {
     var sidebar = $scope.sidebar = { };

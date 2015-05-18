@@ -4,13 +4,13 @@
             <a class="blog-nav-item" active-on-location href="/posts">Posts</a>
             <a class="blog-nav-item" active-on-location href="/post" ng-if="$root.currentUser != null">New Post</a>
 
-            <span class="account" ng-controller="LoginController">
-                <a ng-if="$root.currentUser == null" href="" class="login" ng-click="login()">Login</a>
+            <span class="account" ng-controller="LoginController as loginCtrl">
+                <a ng-if="$root.currentUser == null" href="" class="login" ng-click="loginCtrl.login()">Login</a>
 
                 <div class="dropdown" ng-if="$root.currentUser != null">
                     <a href="#" class="dropdown-toggle"><i class="fa fa-user"></i> {{currentUser.name}} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="" ng-click="logout()">Logout</a></li>
+                        <li><a href="" ng-click="loginCtrl.logout()">Logout</a></li>
                     </ul>
                 </div>
             </span>

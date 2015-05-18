@@ -16,7 +16,7 @@ directives.directive('blogPost', ['$modal', '$location', '$route', 'postService'
 
             $scope.deletePost = () => {
                 $modal.open({
-                    templateUrl: '/dialogs/delete-post.html',
+                    templateUrl: '/posts/delete-post-modal.html',
                     scope: $scope
                 }).result.then(() => {
                     postService.deletePost($scope.post.slug).then(() => {

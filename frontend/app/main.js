@@ -33,10 +33,10 @@ var angularModules = [
     'ui.bootstrap.tpls',
     require('./directives').name,
     require('./filters').name,
-    require('./posts').name,
     require('./login').name,
-    require('./sidebar').name,
     require('./messaging').name,
+    require('./nav').name,
+    require('./posts').name,
     require('./routes').name
 ];
 
