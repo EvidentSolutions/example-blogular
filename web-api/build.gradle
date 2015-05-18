@@ -6,12 +6,12 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 ext {
-    springVersion = '4.0.3.RELEASE'
-    springSecurityVersion = '3.2.3.RELEASE'
+    springVersion = '4.1.6.RELEASE'
+    springSecurityVersion = '4.0.1.RELEASE'
     tomcatVersion = '7.0.53'
 }
 
