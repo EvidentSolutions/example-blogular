@@ -10,6 +10,14 @@ buildscript {
 
 apply plugin: 'base'
 apply plugin: 'node'
+apply plugin: 'idea'
+
+idea {
+    module {
+        sourceDirs += file('app')
+        testSourceDirs += file('test')
+    }
+}
 
 repositories {
     mavenCentral()
