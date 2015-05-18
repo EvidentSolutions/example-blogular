@@ -17,39 +17,48 @@ node {
     download = true
 }
 
-task gulpBuild(type: NodeTask, dependsOn: 'npmInstall') {
-    inputs.dir 'src'
+task bowerInstall(type: NodeTask, dependsOn: npmInstall) {
+    inputs.files '.bowerrc', 'bower.json'
+    outputs.dir 'bower_components'
+
+    script = file('node_modules/bower/bin/bower')
+    args = ['install']
+}
+
+task installDependencies {
+    dependsOn npmInstall
+    dependsOn bowerInstall
+}
+
+task buildProduction(type: NodeTask, dependsOn: installDependencies) {
+    inputs.dir 'app'
     inputs.files 'gulpfile.js', 'bower.json', 'package.json'
-    outputs.dir 'build/gulp/optimized'
+    outputs.dir 'build/egb/optimized'
 
     script = file('node_modules/gulp/bin/gulp.js')
-    args = ['build-production']
+    args = ['build:production']
 }
 
-task gulpServe(type: NodeTask, dependsOn: 'npmInstall') {
+task watch(type: NodeTask, dependsOn: installDependencies) {
     script = file('node_modules/gulp/bin/gulp.js')
-    args = ['default']
+    args = ['watch']
 }
 
-task gulpTest(type: NodeTask, dependsOn: 'npmInstall') {
+task test(type: NodeTask, dependsOn: installDependencies) {
     script = file('node_modules/gulp/bin/gulp.js')
     args = ['test']
 }
 
-task deleteNodeModules(type: Delete) {
-    delete 'node_modules'
-}
+assemble.dependsOn buildProduction
 
-clean.dependsOn deleteNodeModules
-
-task test {
-    dependsOn gulpTest
-}
-
-task build {
-    dependsOn gulpBuild
-}
-
-task serve {
-    dependsOn gulpServe
+task frontendJar(type: Jar, dependsOn: buildProduction) { t ->
+    baseName "blogular-frontend"
+    from "build/egb/optimized"
+    eachFile { details ->
+        details.path = "blogular-frontend/${details.path}"
+    }
+    // Jar contains duplicate empty folders, see Gradle issue:
+    // http://issues.gradle.org/browse/GRADLE-1830
+    // so we need to set includeEmptyDirs to false
+    includeEmptyDirs = false
 }

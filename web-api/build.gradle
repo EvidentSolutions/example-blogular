@@ -60,8 +60,7 @@ tomcatRun {
 }
 
 war {
-    from webAppDir
-    from project(':frontend').tasks.gulpBuild
+    classpath tasks.findByPath(':frontend:frontendJar')
 }
 
 buildscript {
