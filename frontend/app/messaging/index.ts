@@ -1,6 +1,8 @@
 import angular = require('angular');
 var services = angular.module('blogular.messaging', []);
 
-require('./messaging-service');
+import MessagingService = require('./messaging.service');
+
+services.service('messagingService', MessagingService);
 
 export = services;

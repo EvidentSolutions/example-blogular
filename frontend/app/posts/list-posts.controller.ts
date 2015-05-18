@@ -1,7 +1,15 @@
-import angular = require('angular');
-var controllers = angular.module('blogular.posts');
+import PostService = require('./post.service');
 
-controllers.controller('ListPostsController', ['postService', function (postService) {
-    var self = this;
-    postService.loadPosts().then(posts => self.posts = posts);
-}]);
+class ListPostsController {
+
+    posts;
+
+    //noinspection JSUnusedGlobalSymbols
+    static $inject = ['postService'];
+
+    constructor(postService: PostService) {
+        postService.loadPosts().then(posts => this.posts = posts);
+    }
+}
+
+export = ListPostsController;

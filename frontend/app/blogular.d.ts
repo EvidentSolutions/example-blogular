@@ -9,7 +9,18 @@ interface Window {
 
 declare module Blogular {
 
+    interface IUserInfo {
+        name: string
+        authToken: string
+    }
+
+    interface IPostInfo {
+        slug?: string
+        title: string
+        body: string
+    }
+
     interface IBlogularRootScope extends ng.IRootScopeService {
-        currentUser: any
+        currentUser: IUserInfo
     }
 }

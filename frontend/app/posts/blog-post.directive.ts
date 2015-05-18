@@ -1,7 +1,54 @@
 import angular = require('angular');
+import PostService = require('./post.service');
 var directives = angular.module('blogular.posts');
 
-directives.directive('blogPost', ['$modal', '$location', '$route', 'postService', ($modal, $location, $route, postService) => {
+class BlogPostController {
+
+    post;
+    editedPost;
+
+    //noinspection JSUnusedGlobalSymbols
+    static $inject = ['postService', '$modal', '$route', '$location'];
+
+    constructor(private postService:PostService,
+                private $modal:ng.ui.bootstrap.IModalService,
+                private $route:ng.route.IRouteService,
+                private $location:ng.ILocationService) {
+    }
+
+    deletePost() {
+        var post = this.post;
+        this.$modal.open({
+            templateUrl: '/posts/delete-post-modal.html',
+            controllerAs: 'deletePostCtrl',
+            controller: function () {
+                this.postTitle = post.title;
+            }
+        }).result.then(() => {
+            this.postService.deletePost(this.post.slug).then(() => {
+                this.$location.path('/posts');
+                this.$route.reload();
+            });
+        });
+    }
+
+    editPost() {
+        this.editedPost = angular.copy(this.post);
+    }
+
+    cancelEditing() {
+        this.editedPost = null;
+    }
+
+    save() {
+        // Update the post optimistically here before server returns a result
+        this.post = angular.copy(this.editedPost);
+        this.editedPost = null;
+        this.postService.updatePost(this.post);
+    }
+}
+
+function BlogPostDirective() {
     return {
         restrict: 'E',
         replace: true,
@@ -11,40 +58,8 @@ directives.directive('blogPost', ['$modal', '$location', '$route', 'postService'
         },
         bindToController: true,
         controllerAs: 'blogPostCtrl',
-        controller: function () {
-            var ctrl: any = this;
-
-            ctrl.editedPost = null;
-
-            ctrl.deletePost = () => {
-                $modal.open({
-                    templateUrl: '/posts/delete-post-modal.html',
-                    controllerAs: 'deletePostCtrl',
-                    controller: function() {
-                        this.postTitle = ctrl.post.title;
-                    }
-                }).result.then(() => {
-                        postService.deletePost(ctrl.post.slug).then(() => {
-                            $location.path('/posts');
-                            $route.reload();
-                        });
-                    });
-            };
-
-            ctrl.editPost = () => {
-                ctrl.editedPost = angular.copy(ctrl.post);
-            };
-
-            ctrl.cancelEditing = () => {
-                ctrl.editedPost = null;
-            };
-
-            ctrl.save = () => {
-                // Update the post optimistically here before server returns a result
-                ctrl.post = angular.copy(ctrl.editedPost);
-                ctrl.editedPost = null;
-                postService.updatePost(ctrl.post);
-            };
-        }
+        controller: BlogPostController
     };
-}]);
+}
+
+export = BlogPostDirective;

@@ -1,7 +1,10 @@
 import angular = require('angular');
 var directives = angular.module('blogular.directives', []);
 
-require('./active-on-location');
-require('./epic-editor');
+import ActiveOnLocation = require('./active-on-location');
+import EpicEditor = require('./epic-editor');
+
+directives.directive('activeOnLocation', ActiveOnLocation);
+directives.directive('epicEditor', EpicEditor);
 
 export = directives;

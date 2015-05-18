@@ -1,36 +1,42 @@
 import angular = require('angular');
-var services = angular.module('blogular.posts');
+import MessagingService = require('../messaging/messaging.service');
 
-services.service('postService', ['$resource', '$rootScope', 'messagingService', ($resource, $rootScope, messagingService) => {
+class PostService {
 
-    var Post = $resource('/api/posts/:slug', null,  {
-        'update': { method:'PUT' }
-    });
+    static $inject = ['$resource', '$rootScope', 'messagingService'];
 
-    // When server tells that messages have been updated, broadcast an event to the application
-    messagingService.subscribe('/topic/posts/updated', () => $rootScope.$broadcast("postsChanged"));
+    private Post
 
-    return {
-        loadPost(slug) {
-            return Post.get({slug: slug}).$promise;
-        },
+    constructor($resource, $rootScope: Blogular.IBlogularRootScope, messagingService: MessagingService) {
+        this.Post = $resource('/api/posts/:slug', null, {
+            'update': { method:'PUT' }
+        });
 
-        loadPosts() {
-            return Post.query().$promise;
-        },
-
-        savePost(post) {
-            var newPost = angular.copy(post);
-
-            return Post.save(newPost).$promise;
-        },
-
-        updatePost(post) {
-            Post.update({slug: post.slug}, post).$promise;
-        },
-
-        deletePost(slug) {
-            return Post.delete({slug: slug}).$promise;
-        }
+        // When server tells that messages have been updated, broadcast an event to the application
+        messagingService.subscribe('/topic/posts/updated', () => $rootScope.$broadcast("postsChanged"));
     }
-}]);
+
+    loadPost(slug: string): ng.IPromise<Blogular.IPostInfo> {
+        return this.Post.get({slug: slug}).$promise;
+    }
+
+    loadPosts(): ng.IPromise<Blogular.IPostInfo[]> {
+        return this.Post.query().$promise;
+    }
+
+    savePost(post: Blogular.IPostInfo): ng.IPromise<{}> {
+        var newPost = angular.copy(post);
+
+        return this.Post.save(newPost).$promise;
+    }
+
+    updatePost(post: Blogular.IPostInfo): ng.IPromise<{}> {
+        return this.Post.update({slug: post.slug}, post).$promise;
+    }
+
+    deletePost(slug: string): ng.IPromise<{}> {
+        return this.Post.delete({slug: slug}).$promise;
+    }
+}
+
+export = PostService;

@@ -2,10 +2,16 @@ import angular = require('angular');
 
 var postsModule = angular.module('blogular.posts', []);
 
-require('./blog-post.directive.ts');
-require('./post.service.ts');
-require('./list-posts.controller.ts');
-require('./post.controller.ts');
-require('./view-post.controller.ts');
+import BlogPostDirective = require('./blog-post.directive');
+import PostService = require('./post.service');
+import ListPostsController = require('./list-posts.controller');
+import PostController = require('./post.controller');
+import ViewPostController = require('./view-post.controller');
+
+postsModule.service('postService', PostService);
+postsModule.directive('blogPost', BlogPostDirective);
+postsModule.controller('PostController', PostController);
+postsModule.controller('ListPostsController', ListPostsController);
+postsModule.controller('ViewPostController', ViewPostController);
 
 export = postsModule;

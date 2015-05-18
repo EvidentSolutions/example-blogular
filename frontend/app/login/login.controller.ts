@@ -1,15 +1,22 @@
-import angular = require('angular');
-var controllers = angular.module('blogular.login');
+import LoginService = require('./login.service');
 
-controllers.controller('LoginController', ['$modal', '$location', 'loginService', function ($modal: ng.ui.bootstrap.IModalService, $location: ng.ILocationService, loginService) {
+class LoginController {
 
-    var self = this;
+    //noinspection JSUnusedGlobalSymbols
+    static $inject = ['$modal', '$location', 'loginService'];
 
-    self.login = () => {
-        $modal.open({
+    constructor(private $modal: ng.ui.bootstrap.IModalService,
+                private $location: ng.ILocationService,
+                private loginService: LoginService) {
+    }
+
+    login() {
+        var loginService = this.loginService;
+
+        this.$modal.open({
             templateUrl: '/login/login-modal.html',
             controllerAs: 'loginModalCtrl',
-            controller: ['$modalInstance', function ($modalInstance: ng.ui.bootstrap.IModalServiceInstance) {
+            controller: ['$modalInstance', function ($modalInstance:ng.ui.bootstrap.IModalServiceInstance) {
                 var modalCtrl = this;
 
                 modalCtrl.loggingIn = false;
@@ -31,11 +38,13 @@ controllers.controller('LoginController', ['$modal', '$location', 'loginService'
                 };
             }]
         });
-    };
+    }
 
-    self.logout = () => {
-        loginService.logout().then(() => {
-            $location.path('/');
-        });
-    };
-}]);
+    logout() {
+        this.loginService.logout().then(() => {
+            this.$location.path('/');
+        })
+    }
+}
+
+export = LoginController;

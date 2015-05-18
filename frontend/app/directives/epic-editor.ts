@@ -1,9 +1,7 @@
-import angular = require('angular');
-var directives = angular.module('blogular.directives');
 var EpicEditor = require('epiceditor');
 var marked = require('marked');
 
-directives.directive('epicEditor', [() => {
+function EpicEditorDirective() {
     return {
         restrict: 'E',
         replace: true,
@@ -41,4 +39,6 @@ directives.directive('epicEditor', [() => {
             });
         }
     };
-}]);
+}
+
+export = EpicEditorDirective;

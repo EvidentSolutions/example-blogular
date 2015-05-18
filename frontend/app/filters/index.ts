@@ -1,6 +1,8 @@
 import angular = require('angular');
 var filters = angular.module('blogular.filters', []);
 
-require('./markdown-filter');
+import markdown = require('./markdown-filter');
+
+filters.filter('markdown', markdown);
 
 export = filters;

@@ -1,17 +1,24 @@
-import angular = require('angular');
-var controllers = angular.module('blogular.posts');
+import PostService = require('./post.service');
 
-controllers.controller('ViewPostController', ['$routeParams', 'postService', function ($routeParams, postService) {
-    var self: any = this;
+class ViewPostController {
 
-    var slug = $routeParams.slug;
-    postService.loadPost(slug)
-        .then(post => self.post = post)
-        .catch(e => {
-            if (e.status == 404) {
-                self.error = "Could not find post '" + slug + "'.";
-            } else {
-                throw e;
-            }
-        });
-}]);
+    post;
+    error:string;
+
+    static $inject = ['$routeParams', 'postService'];
+
+    constructor($routeParams: ng.route.IRouteParamsService, postService:PostService) {
+        var slug = $routeParams['slug'];
+        postService.loadPost(slug)
+            .then(post => this.post = post)
+            .catch(e => {
+                if (e.status == 404) {
+                    this.error = "Could not find post '" + slug + "'.";
+                } else {
+                    throw e;
+                }
+            });
+    }
+}
+
+export = ViewPostController;

@@ -1,20 +1,26 @@
-import angular = require('angular');
-var controllers = angular.module('blogular.posts');
+import PostService = require('./post.service');
 
-controllers.controller('PostController', ['$location', 'postService', function ($location, postService) {
-    var ctrl: any = this;
+class PostController {
 
-    ctrl.saving = false;
-    var newPost = ctrl.newPost = {
+    saving = false;
+    newPost = {
         title: '',
         body: ''
     };
 
-    ctrl.savePost = () => {
-        ctrl.saving = true;
-        postService.savePost(newPost).then(() => {
-            ctrl.saving = false;
-            $location.path('/posts');
+    //noinspection JSUnusedGlobalSymbols
+    static $inject = ['$location', 'postService'];
+
+    constructor(private $location: ng.ILocationService, private postService: PostService) {
+    }
+
+    savePost() {
+        this.saving = true;
+        this.postService.savePost(this.newPost).then(() => {
+            this.saving = false;
+            this.$location.path('/posts');
         });
-    };
-}]);
+    }
+}
+
+export = PostController;
