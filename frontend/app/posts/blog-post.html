@@ -1,37 +1,37 @@
 <div>
-    <div class="blog-post" ng-if="editedPost == null">
-        <h2 class="blog-post-title"><a href="/posts/{{post.slug}}">{{post.title}}</a></h2>
+    <div class="blog-post" ng-if="blogPostCtrl.editedPost == null">
+        <h2 class="blog-post-title"><a href="/posts/{{blogPostCtrl.post.slug}}">{{blogPostCtrl.post.title}}</a></h2>
 
         <div class="edit-actions" ng-if="$root.currentUser != null">
-            <a href="" ng-click="editPost()" title="Edit post"><i class="fa fa-pencil"></i></a>
-            <a href="" ng-click="deletePost()" title="Delete post"><i class="fa fa-trash-o"></i></a>
+            <a href="" ng-click="blogPostCtrl.editPost()" title="Edit post"><i class="fa fa-pencil"></i></a>
+            <a href="" ng-click="blogPostCtrl.deletePost()" title="Delete post"><i class="fa fa-trash-o"></i></a>
         </div>
         <p class="blog-post-meta">
-            {{post.publishTime | date}} by {{post.author}}
+            {{blogPostCtrl.post.publishTime | date}} by {{blogPostCtrl.post.author}}
         </p>
 
-        <div ng-bind-html="post.body | markdown"></div>
+        <div ng-bind-html="blogPostCtrl.post.body | markdown"></div>
     </div>
 
-    <form class="edit-post form-horizontal" name="postForm" role="form" novalidate ng-if="editedPost != null">
+    <form class="edit-post form-horizontal" name="postForm" role="form" novalidate ng-if="blogPostCtrl.editedPost != null">
 
         <div class="form-group">
             <div class="col-sm-12">
-                <input type="text" class="form-control" id="inputPostTitle" ng-model="editedPost.title" required
-                       placeholder="Title" ng-disabled="saving">
+                <input type="text" class="form-control" id="inputPostTitle" ng-model="blogPostCtrl.editedPost.title" required
+                       placeholder="Title" ng-disabled="blogPostCtrl.saving">
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-sm-12">
-                <epic-editor ng-model="editedPost.body" required></epic-editor>
+                <epic-editor ng-model="blogPostCtrl.editedPost.body" required></epic-editor>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-sm-12">
-                <button ng-disabled="saving || postForm.$invalid || postForm.$pristine" class="btn btn-primary" ng-click="save()">Save</button>
-                <button ng-disabled="saving" class="btn btn-default" ng-click="cancelEditing()">Cancel</button>
+                <button ng-disabled="blogPostCtrl.saving || postForm.$invalid || postForm.$pristine" class="btn btn-primary" ng-click="blogPostCtrl.save()">Save</button>
+                <button ng-disabled="blogPostCtrl.saving" class="btn btn-default" ng-click="blogPostCtrl.cancelEditing()">Cancel</button>
             </div>
         </div>
     </form>

@@ -2,4 +2,4 @@
 
 module.exports = require('angular').module('blogular.nav', []);
 
-require('./sidebar.controller');
+require('./sidebar.directive.js');

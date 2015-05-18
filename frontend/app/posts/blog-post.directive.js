@@ -11,34 +11,41 @@ directives.directive('blogPost', ['$modal', '$location', '$route', 'postService'
         scope: {
             post: '='
         },
-        link: ($scope) => {
-            $scope.editedPost = null;
+        bindToController: true,
+        controllerAs: 'blogPostCtrl',
+        controller: function () {
+            var ctrl = this;
 
-            $scope.deletePost = () => {
+            ctrl.editedPost = null;
+
+            ctrl.deletePost = () => {
                 $modal.open({
                     templateUrl: '/posts/delete-post-modal.html',
-                    scope: $scope
+                    controllerAs: 'deletePostCtrl',
+                    controller: function() {
+                        this.postTitle = ctrl.post.title;
+                    }
                 }).result.then(() => {
-                    postService.deletePost($scope.post.slug).then(() => {
-                        $location.path('/posts');
-                        $route.reload();
+                        postService.deletePost(ctrl.post.slug).then(() => {
+                            $location.path('/posts');
+                            $route.reload();
+                        });
                     });
-                });
             };
 
-            $scope.editPost = () => {
-                $scope.editedPost = angular.copy($scope.post);
+            ctrl.editPost = () => {
+                ctrl.editedPost = angular.copy(ctrl.post);
             };
 
-            $scope.cancelEditing = () => {
-                $scope.editedPost = null;
+            ctrl.cancelEditing = () => {
+                ctrl.editedPost = null;
             };
 
-            $scope.save = () => {
+            ctrl.save = () => {
                 // Update the post optimistically here before server returns a result
-                $scope.post = angular.copy($scope.editedPost);
-                $scope.editedPost = null;
-                postService.updatePost($scope.post);
+                ctrl.post = angular.copy(ctrl.editedPost);
+                ctrl.editedPost = null;
+                postService.updatePost(ctrl.post);
             };
         }
     };

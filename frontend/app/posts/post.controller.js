@@ -2,17 +2,19 @@
 
 var controllers = require('angular').module('blogular.posts');
 
-controllers.controller('PostController', ['$scope', '$location', 'postService', ($scope, $location, postService) => {
-    $scope.saving = false;
-    var newPost = $scope.newPost = {
+controllers.controller('PostController', ['$location', 'postService', function ($location, postService) {
+    var ctrl = this;
+
+    ctrl.saving = false;
+    var newPost = ctrl.newPost = {
         title: '',
         body: ''
     };
 
-    $scope.savePost = () => {
-        $scope.saving = true;
+    ctrl.savePost = () => {
+        ctrl.saving = true;
         postService.savePost(newPost).then(() => {
-            $scope.saving = false;
+            ctrl.saving = false;
             $location.path('/posts');
         });
     };

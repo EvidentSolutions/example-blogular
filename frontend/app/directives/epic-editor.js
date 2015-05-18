@@ -10,7 +10,7 @@ directives.directive('epicEditor', [() => {
         replace: true,
         template: '<div class="epiceditor"></div>',
         require: 'ngModel',
-        link: ($scope, $element, attrs, ngModel) => {
+        link($scope, $element, attrs, ngModel) {
             var opts = {
                 container: $element[0],
                 basePath: '/css/epiceditor',
