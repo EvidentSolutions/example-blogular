@@ -1,6 +1,4 @@
-"use strict";
-
-var angular = require('angular');
+import angular = require('angular');
 var directives = angular.module('blogular.posts');
 
 directives.directive('blogPost', ['$modal', '$location', '$route', 'postService', ($modal, $location, $route, postService) => {
@@ -14,7 +12,7 @@ directives.directive('blogPost', ['$modal', '$location', '$route', 'postService'
         bindToController: true,
         controllerAs: 'blogPostCtrl',
         controller: function () {
-            var ctrl = this;
+            var ctrl: any = this;
 
             ctrl.editedPost = null;
 

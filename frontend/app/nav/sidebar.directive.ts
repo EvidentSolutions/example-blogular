@@ -1,6 +1,5 @@
-"use strict";
-
-var controllers = require('angular').module('blogular.nav');
+import angular = require('angular');
+var controllers = angular.module('blogular.nav');
 
 controllers.directive('sidebar', ['postService', function (postService) {
     return {

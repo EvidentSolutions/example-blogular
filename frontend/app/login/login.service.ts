@@ -1,8 +1,5 @@
-"use strict";
-
-var angular = require('angular');
-var config = require('../config');
-var $ = require('jquery');
+import angular = require('angular');
+import $ = require('jquery');
 
 var services = angular.module('blogular.login');
 

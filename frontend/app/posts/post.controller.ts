@@ -1,9 +1,8 @@
-"use strict";
-
-var controllers = require('angular').module('blogular.posts');
+import angular = require('angular');
+var controllers = angular.module('blogular.posts');
 
 controllers.controller('PostController', ['$location', 'postService', function ($location, postService) {
-    var ctrl = this;
+    var ctrl: any = this;
 
     ctrl.saving = false;
     var newPost = ctrl.newPost = {

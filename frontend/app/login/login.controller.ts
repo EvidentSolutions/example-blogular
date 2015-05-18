@@ -1,8 +1,7 @@
-"use strict";
+import angular = require('angular');
+var controllers = angular.module('blogular.login');
 
-var controllers = require('angular').module('blogular.login');
-
-controllers.controller('LoginController', ['$modal', '$location', 'loginService', function ($modal, $location, loginService) {
+controllers.controller('LoginController', ['$modal', '$location', 'loginService', function ($modal: ng.ui.bootstrap.IModalService, $location: ng.ILocationService, loginService) {
 
     var self = this;
 
@@ -10,7 +9,7 @@ controllers.controller('LoginController', ['$modal', '$location', 'loginService'
         $modal.open({
             templateUrl: '/login/login-modal.html',
             controllerAs: 'loginModalCtrl',
-            controller: ['$modalInstance', function ($modalInstance) {
+            controller: ['$modalInstance', function ($modalInstance: ng.ui.bootstrap.IModalServiceInstance) {
                 var modalCtrl = this;
 
                 modalCtrl.loggingIn = false;

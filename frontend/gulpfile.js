@@ -1,3 +1,4 @@
+/// <reference path="./blogular.d.ts" />
 "use strict";
 
 var gulp = require('gulp');
@@ -9,6 +10,7 @@ gulpBuild.registerDefaultTasks(gulp);
 var settings = gulpBuild.settings;
 
 settings.browserify.ignoredExternalLibraries = ['angular-i18n', 'animate.css', 'font-awesome'];
+settings.typescript.flags.noImplicitAny = false;
 
 settings.revall.options.ignore = [/^\/favicon.ico$/g, /^\/index.html/g, /^css\/epiceditor\/.+/g];
 

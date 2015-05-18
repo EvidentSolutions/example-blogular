@@ -1,6 +1,5 @@
-"use strict";
-
-var directives = require('angular').module('blogular.directives');
+import angular = require('angular');
+var directives = angular.module('blogular.directives');
 var EpicEditor = require('epiceditor');
 var marked = require('marked');
 
@@ -10,7 +9,7 @@ directives.directive('epicEditor', [() => {
         replace: true,
         template: '<div class="epiceditor"></div>',
         require: 'ngModel',
-        link($scope, $element, attrs, ngModel) {
+        link($scope: ng.IScope, $element: JQuery, attrs: ng.IAttributes, ngModel: ng.INgModelController) {
             var opts = {
                 container: $element[0],
                 basePath: '/css/epiceditor',

@@ -1,15 +1,15 @@
-"use strict";
+/// <reference path="./blogular.d.ts" />
 
 require('traceur-runtime');
 
 // This is the main entry point of our application. Lets import some modules:
-var config = require('./config');
+import config = require('./config');
 
 // We'll need to load jQuery into global variable or Bootstrap and Angular won't find it.
 window.jQuery = require('jquery');
 
 // Next, load all angular components. These will set up some global variables as well.
-var angular = require('angular');
+import angular = require('angular');
 require('angular-route');
 require('angular-sanitize');
 require('angular-resource');
@@ -55,8 +55,6 @@ try {
 var app = angular.module('blogular', angularModules);
 
 // Use the HTML5 History API
-app.config(['$locationProvider', $locationProvider => $locationProvider.html5Mode(true)]);
+app.config(['$locationProvider', ($locationProvider: ng.ILocationProvider) => $locationProvider.html5Mode(true)]);
 
-app.config(['$logProvider', $logProvider => $logProvider.debugEnabled(config.debugLogging)]);
-
-module.exports = app;
+app.config(['$logProvider', ($logProvider: ng.ILogProvider) => $logProvider.debugEnabled(config.debugLogging)]);

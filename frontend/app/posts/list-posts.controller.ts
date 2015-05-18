@@ -1,6 +1,5 @@
-"use strict";
-
-var controllers = require('angular').module('blogular.posts');
+import angular = require('angular');
+var controllers = angular.module('blogular.posts');
 
 controllers.controller('ListPostsController', ['postService', function (postService) {
     var self = this;

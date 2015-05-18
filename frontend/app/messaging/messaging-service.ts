@@ -1,13 +1,10 @@
-"use strict";
-
-var angular = require('angular');
+import angular = require('angular');
 var SockJS = require("sockjs");
 var Stomp = require("stomp");
-var config = require("../config");
 
 var services = angular.module('blogular.messaging');
 
-services.service('messagingService', ['$rootScope', '$q', '$log', ($rootScope, $q, $log) => {
+services.service('messagingService', ['$rootScope', '$q', '$log', ($rootScope: Blogular.IBlogularRootScope, $q: ng.IQService, $log: ng.ILogService) => {
     var stompPromise = null;
 
     function getStomp() {

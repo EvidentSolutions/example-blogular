@@ -1,10 +1,8 @@
-"use strict";
-
-var angular = require('angular');
+import angular = require('angular');
 var routes = angular.module('blogular.routes', []);
 
 // Route definitions for the application.
-routes.config(['$routeProvider', $routeProvider => {
+routes.config(['$routeProvider', ($routeProvider: ng.route.IRouteProvider) => {
     $routeProvider
         .when('/', { redirectTo: '/posts' })
         .when('/post', { controller: 'PostController', controllerAs: 'postCtrl', templateUrl: '/posts/post.html', requiresLogin: true })
@@ -14,7 +12,7 @@ routes.config(['$routeProvider', $routeProvider => {
         .otherwise({templateUrl: '/errors/not-found.html'});
 }]);
 
-routes.run(['$rootScope', '$location', ($rootScope, $location) => {
+routes.run(['$rootScope', '$location', ($rootScope: Blogular.IBlogularRootScope, $location: ng.ILocationService) => {
     $rootScope.$on("$routeChangeStart", function (event, next) {
         if (!$rootScope.currentUser && next.requiresLogin) {
             $location.path("/login");
@@ -22,5 +20,4 @@ routes.run(['$rootScope', '$location', ($rootScope, $location) => {
     });
 }]);
 
-module.exports = routes;
-
+export = routes;
