@@ -13,7 +13,7 @@ public class DefaultController {
             "/",
             "/post",
             "/posts",
-            "/posts/{slug:[^a-zA-Z0-9-]+}",
+            "/posts/{slug:[a-zA-Z0-9-]+}",
             "/login"}
     )
     public String defaultPage() {
