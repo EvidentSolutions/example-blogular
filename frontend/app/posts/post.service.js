@@ -6,7 +6,7 @@ var config = require('../config');
 
 services.service('postService', ['$resource', '$rootScope', 'messagingService', ($resource, $rootScope, messagingService) => {
 
-    var Post = $resource(config.apiBase + "/posts/:slug", null,  {
+    var Post = $resource('/api/posts/:slug', null,  {
         'update': { method:'PUT' }
     });
 

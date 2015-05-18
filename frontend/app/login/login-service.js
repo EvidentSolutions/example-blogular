@@ -9,10 +9,9 @@ var services = angular.module('blogular.login');
 services.service('loginService', ['$rootScope', '$http', '$q', ($rootScope, $http, $q) => {
     return {
         login(username, password) {
-            var url = config.apiBase + '/account/login';
             var data = $.param({ username: username, password: password });
             var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-            return $http({method: 'POST', url: url, data: data, headers: headers}).then((r) => {
+            return $http({method: 'POST', url: '/api/account/login', data: data, headers: headers}).then((r) => {
                 var user = r.data;
                 $rootScope.currentUser = user;
 

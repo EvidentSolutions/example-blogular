@@ -30,17 +30,6 @@ gulp.task('styles:copy-epic-editor', function() {
         .pipe(gulp.dest('./build/egb/static/css/epiceditor'));
 });
 
-Object.assign(settings.variables, {
-    API_BASE: 'http://localhost:8080/api'
-});
-
 gulp.task('build-production', ['clean'], function() {
-    Object.assign(settings.variables, {
-        API_BASE: '/api'
-    });
-
-    settings.staticBundle = true;
-    settings.minimized = true;
-    settings.variables.API_BASE = '/api';
     gulp.start('build');
 });

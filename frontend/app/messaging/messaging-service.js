@@ -14,7 +14,7 @@ services.service('messagingService', ['$rootScope', '$q', '$log', ($rootScope, $
         if (!stompPromise) {
             var deferred = $q.defer();
 
-            var client = new SockJS(config.apiBase + '/stomp');
+            var client = new SockJS('/api/stomp');
 
             var stomp = Stomp.over(client);
             stomp.debug = msg => $log.debug(msg);
