@@ -6,6 +6,5 @@ build
 classes
 frontend/bower_components
 frontend/node_modules
+frontend/typings
 npm-debug.log
-
-

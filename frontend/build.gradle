@@ -25,9 +25,15 @@ task bowerInstall(type: NodeTask, dependsOn: npmInstall) {
     args = ['install']
 }
 
+task tsd(type: NodeTask, dependsOn: npmInstall) {
+    script = file('node_modules/gulp/bin/gulp.js')
+    args = ['egb:typescript:tsd']
+}
+
 task installDependencies {
     dependsOn npmInstall
     dependsOn bowerInstall
+    dependsOn tsd
 }
 
 task buildProduction(type: NodeTask, dependsOn: installDependencies) {
