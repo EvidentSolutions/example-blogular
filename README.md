@@ -10,15 +10,15 @@ If you wish to optimize your workflow a bit, you probably want to install the ot
 
 ## Quick-start
 
-To get started, first start Tomcat providing the API in one console:
+To get started, first start a process for compiling client resources on a console:
+
+    ./gradlew watch
+    
+Then start Tomcat on another console:
 
     ./gradlew tomcatRun
 
-Then start the frontend server in another:
-
-    ./gradlew serve
-
-Finally open your browser: [http://localhost:3000/](http://localhost:3000/)
+Finally open your browser: [http://localhost:8080/](http://localhost:8080/)
 
 ## Optimized workflow
 
