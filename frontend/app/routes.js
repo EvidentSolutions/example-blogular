@@ -7,10 +7,10 @@ var routes = angular.module('blogular.routes', []);
 routes.config(['$routeProvider', $routeProvider => {
     $routeProvider
         .when('/', { redirectTo: '/posts' })
-        .when('/post', { controller: 'PostController', templateUrl: '/controllers/new-post.html', requiresLogin: true })
-        .when('/posts', { controller: 'ListPostsController', templateUrl: '/controllers/list-posts.html' })
-        .when('/posts/:slug', { controller: 'ViewPostController', templateUrl: '/controllers/view-post.html' })
-        .when('/login', { templateUrl: '/controllers/login.html' })
+        .when('/post', { controller: 'PostController', templateUrl: '/posts/new-post.html', requiresLogin: true })
+        .when('/posts', { controller: 'ListPostsController', controllerAs: 'listPostsCtrl', templateUrl: '/posts/list-posts.html' })
+        .when('/posts/:slug', { controller: 'ViewPostController', templateUrl: '/posts/view-post.html' })
+        .when('/login', { templateUrl: '/login/login.html' })
         .otherwise({templateUrl: '/errors/not-found.html'});
 }]);
 

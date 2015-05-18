@@ -31,10 +31,12 @@ var angularModules = [
     'ui.bootstrap.tabs',
     'ui.bootstrap.dropdown',
     'ui.bootstrap.tpls',
-    require('./controllers').name,
     require('./directives').name,
     require('./filters').name,
-    require('./services').name,
+    require('./posts').name,
+    require('./login').name,
+    require('./sidebar').name,
+    require('./messaging').name,
     require('./routes').name
 ];
 

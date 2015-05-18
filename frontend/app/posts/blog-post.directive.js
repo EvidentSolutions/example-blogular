@@ -1,13 +1,13 @@
 "use strict";
 
 var angular = require('angular');
-var directives = angular.module('blogular.directives');
+var directives = angular.module('blogular.posts');
 
 directives.directive('blogPost', ['$modal', '$location', '$route', 'postService', ($modal, $location, $route, postService) => {
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: '/directives/blog-post.html',
+        templateUrl: '/posts/blog-post.html',
         scope: {
             post: '='
         },

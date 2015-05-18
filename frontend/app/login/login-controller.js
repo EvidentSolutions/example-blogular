@@ -1,6 +1,6 @@
 "use strict";
 
-var controllers = require('angular').module('blogular.controllers');
+var controllers = require('angular').module('blogular.login');
 
 controllers.controller('LoginController', ['$scope', '$modal', '$location', 'loginService', ($scope, $modal, $location, loginService) => {
 

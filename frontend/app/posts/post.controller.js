@@ -1,6 +1,6 @@
 "use strict";
 
-var controllers = require('angular').module('blogular.controllers');
+var controllers = require('angular').module('blogular.posts');
 
 controllers.controller('PostController', ['$scope', '$location', 'postService', ($scope, $location, postService) => {
     $scope.saving = false;

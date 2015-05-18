@@ -1,0 +1,9 @@
+<progress ng-if="!listPostsCtrl.posts"></progress>
+<div ng-if="listPostsCtrl.posts != null">
+
+    <blog-post post="post" ng-repeat="post in listPostsCtrl.posts"></blog-post>
+
+    <p ng-if="listPostsCtrl.posts.length == 0">
+        No posts. <a href="/post">Write a new one.</a>
+    </p>
+</div>

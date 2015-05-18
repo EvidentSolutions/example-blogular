@@ -5,7 +5,7 @@ var SockJS = require("sockjs");
 var Stomp = require("stomp");
 var config = require("../config");
 
-var services = angular.module('blogular.services');
+var services = angular.module('blogular.messaging');
 
 services.service('messagingService', ['$rootScope', '$q', '$log', ($rootScope, $q, $log) => {
     var stompPromise = null;

@@ -1,6 +1,6 @@
 "use strict";
 
-var controllers = require('angular').module('blogular.controllers');
+var controllers = require('angular').module('blogular.posts');
 
 controllers.controller('ViewPostController', ['$scope', '$routeParams', 'postService', ($scope, $routeParams, postService) => {
     var slug = $routeParams.slug;

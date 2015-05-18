@@ -12,8 +12,6 @@ settings.browserify.ignoredExternalLibraries = ['animate.css', 'font-awesome'];
 
 settings.revall.options.ignore = [/^\/favicon.ico$/g, /^\/index.html/g, /^css\/epiceditor\/.+/g];
 
-settings.serve.indexPagePattern = /^\/(post|posts|login)(\/.*)?$/;
-
 settings.css.vendorStylesheets = [
     './node_modules/bootstrap/dist/css/bootstrap.min.css',
     './node_modules/font-awesome/css/font-awesome.min.css',

@@ -4,7 +4,7 @@ var angular = require('angular');
 var config = require('../config');
 var $ = require('jquery');
 
-var services = angular.module('blogular.services');
+var services = angular.module('blogular.login');
 
 services.service('loginService', ['$rootScope', '$http', '$q', ($rootScope, $http, $q) => {
     return {

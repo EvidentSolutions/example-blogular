@@ -1,7 +1,7 @@
 "use strict";
 
 var angular = require('angular');
-var services = angular.module('blogular.services');
+var services = angular.module('blogular.posts');
 var config = require('../config');
 
 services.service('postService', ['$resource', '$rootScope', 'messagingService', ($resource, $rootScope, messagingService) => {
