@@ -8,7 +8,7 @@ gulpBuild.registerDefaultTasks(gulp);
 
 var settings = gulpBuild.settings;
 
-settings.browserify.ignoredExternalLibraries = ['animate.css', 'font-awesome'];
+settings.browserify.ignoredExternalLibraries = ['angular-i18n', 'animate.css', 'font-awesome'];
 
 settings.revall.options.ignore = [/^\/favicon.ico$/g, /^\/index.html/g, /^css\/epiceditor\/.+/g];
 
@@ -30,6 +30,8 @@ gulp.task('styles:copy-epic-editor', function() {
         .pipe(gulp.dest('./build/egb/static/css/epiceditor'));
 });
 
-gulp.task('build-production', ['clean'], function() {
+gulp.task('build:production', ['egb:clean'], function() {
     gulp.start('build');
 });
+
+gulp.task('test', ['egb:test:unit', 'egb:test:e2e']);

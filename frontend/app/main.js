@@ -10,14 +10,14 @@ window.jQuery = require('jquery');
 
 // Next, load all angular components. These will set up some global variables as well.
 var angular = require('angular');
-require('angular/route');
-require('angular/sanitize');
-require('angular/resource');
-require('angular/animate');
-require('angular/i18n/angular-locale_fi');
+require('angular-route');
+require('angular-sanitize');
+require('angular-resource');
+require('angular-animate');
+require('angular-i18n/angular-locale_fi');
 
 // AngularJS integration for Bootstrap
-require('angular-bootstrap/ui-bootstrap-tpls');
+require('angular-bootstrap/dist/ui-bootstrap-tpls');
 
 // Workaround for bugs
 require('./hacks/angular-bootstrap-autofocus-hack');
