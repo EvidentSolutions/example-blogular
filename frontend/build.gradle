@@ -1,14 +1,8 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.moowork.gradle:gradle-node-plugin:0.5'
-    }
+plugins {
+    id "com.moowork.node" version "0.9"
 }
 
 apply plugin: 'base'
-apply plugin: 'node'
 apply plugin: 'idea'
 
 idea {
@@ -18,8 +12,9 @@ idea {
     }
 }
 
-repositories {
-    jcenter()
+node {
+    version = '0.12.3'
+    download = true
 }
 
 task gulpBuild(type: NodeTask, dependsOn: 'npmInstall') {
@@ -57,9 +52,4 @@ task build {
 
 task serve {
     dependsOn gulpServe
-}
-
-node {
-    version = '0.10.26'
-    download = true
 }
