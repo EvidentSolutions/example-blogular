@@ -1,11 +1,8 @@
 package fi.evident.blogular.web.config;
 
 import fi.evident.blogular.core.config.RootConfig;
-import fi.evident.blogular.web.filters.CorsFilter;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
-import javax.servlet.Filter;
 
 public class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -23,10 +20,5 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
     @Override
     protected String[] getServletMappings() {
         return new String[] { "/" };
-    }
-
-    @Override
-    protected Filter[] getServletFilters() {
-        return new Filter[] { new CorsFilter() };
     }
 }
