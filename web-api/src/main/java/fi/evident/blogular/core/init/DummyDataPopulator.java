@@ -16,11 +16,11 @@ import org.springframework.util.StreamUtils;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 @Lazy(false)
 @Component
-@Profile("development")
+@Profile({"development", "standalone"})
 public class DummyDataPopulator {
 
     @Autowired
@@ -58,7 +58,7 @@ public class DummyDataPopulator {
     @NotNull
     private String readResource(@NotNull @ResourceReference String location) throws IOException {
         try (InputStream inputStream = resourceLoader.getResource(location).getInputStream()) {
-            return StreamUtils.copyToString(inputStream, Charset.forName("UTF-8"));
+            return StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
         }
     }
 }
