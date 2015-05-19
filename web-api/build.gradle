@@ -1,6 +1,9 @@
+plugins {
+    id "com.bmuschko.tomcat" version "2.2.2"
+}
+
 apply plugin: 'java'
 apply plugin: 'war'
-apply plugin: 'tomcat'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -54,21 +57,13 @@ dependencies {
     }
 }
 
-tomcatRun {
-    contextPath = '/'
-    configFile = file("$projectDir/etc/development-context.xml")
-}
-
-war {
+task bundledWar(type: War) {
+    baseName "blogular-bundled"
     classpath tasks.findByPath(':frontend:frontendJar')
 }
 
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:1.2.3'
-    }
+task runStandalone(type: com.bmuschko.gradle.tomcat.tasks.TomcatRunWar, dependsOn: bundledWar) {
+    webApp = bundledWar.outputs.files.singleFile
+    contextPath = '/'
+    configFile = file("$projectDir/etc/standalone-context.xml")
 }

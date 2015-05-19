@@ -10,15 +10,11 @@ If you wish to optimize your workflow a bit, you probably want to install the ot
 
 ## Quick-start
 
-To get started, first start a process for compiling client resources on a console:
-
-    ./gradlew watch
+To get started, start a standalone version of the project:
     
-Then start Tomcat on another console:
+    ./gradlew runStandalone
 
-    ./gradlew tomcatRun
-
-Finally open your browser: [http://localhost:8080/](http://localhost:8080/)
+When everything as been compiled and server has started, open your browser: [http://localhost:8080/](http://localhost:8080/)
 
 ## Optimized workflow
 
@@ -30,6 +26,7 @@ some shared run configurations you probably want to use:
   - _web-api_ - Starts the backend in a Tomcat running inside IDEA.
   - _web-api lag_ - Same as _web-api_ but adds a simulated lag of 1 second to every request.
   - _JS Debug_ - Connects JavaScript debugger to running frontend-module.
+  - _gulp watch_ - Starts process for compiling client code.
 
 ### LiveReload
 
