@@ -12,7 +12,7 @@ var settings = gulpBuild.settings;
 settings.browserify.ignoredExternalLibraries = ['angular-i18n', 'animate.css', 'font-awesome'];
 settings.typescript.flags.noImplicitAny = false;
 
-settings.revall.options.ignore = [/^\/favicon.ico$/g, /^\/index.html/g, /^\/css\/epiceditor\/.+/g];
+settings.revall.options.dontRenameFile = [/^\/favicon.ico$/g, /^\/index.html/g, /^\/css\/epiceditor\/.+/g];
 
 settings.css.vendorStylesheets = [
     './node_modules/bootstrap/dist/css/bootstrap.min.css',
