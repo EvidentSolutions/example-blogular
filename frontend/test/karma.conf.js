@@ -1,7 +1,10 @@
 // Karma configuration
-// Generated on Mon May 12 2014 00:31:37 GMT+0300 (EEST)
 
+//noinspection JSPrimitiveTypeWrapperUsage
 module.exports = function (config) {
+    "use strict";
+
+    //noinspection JSUnresolvedVariable
     config.set({
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -14,7 +17,7 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'unit/**/*_spec.js'
+            'unit/**/*.spec.ts'
         ],
 
 
@@ -25,7 +28,7 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            '**/*.js': ['browserify']
+            '**/*.ts': ['browserify']
         },
 
 
@@ -62,7 +65,9 @@ module.exports = function (config) {
         singleRun: false,
 
         browserify: {
-            transform: ['evident-gulp-build/node_modules/browserify-shim', 'evident-gulp-build/node_modules/es6ify']
+            debug: true,
+            plugin: [['evident-gulp-build/node_modules/tsify', {target: 'ES5'}]],
+            transform: ['evident-gulp-build/node_modules/browserify-shim']
         }
     });
 };

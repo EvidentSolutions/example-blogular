@@ -1,11 +1,8 @@
-"use strict";
+/// <reference path="../../app/blogular.d.ts" />
 
-// Hack needed for https://github.com/thlorenz/browserify-shim/issues/49
-window.__browserify_shim_require__ = require;
-
-require('angular');
-require('angular-mocks');
-require('../../app/nav');
+import 'angular';
+import 'angular-mocks';
+import '../../app/nav';
 
 describe('controllers', () => {
     describe('SidebarController', () => {
