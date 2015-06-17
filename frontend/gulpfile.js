@@ -37,5 +37,27 @@ gulp.task('build:production', ['egb:clean'], function() {
 });
 
 gulp.task('test:unit', ['egb:test:unit']);
-gulp.task('test:e2e', ['egb:test:e2e']);
 gulp.task('test', ['test:unit', 'test:e2e']);
+
+gulp.task('test:e2e:build', function () {
+    var ts = require('gulp-typescript');
+
+    return gulp.src(["./test/e2e/**/*.spec.ts"])
+        .pipe(ts({
+            noImplicitAny: true,
+            out: 'output.js',
+            typescript: require('evident-gulp-build/node_modules/tsify/node_modules/typescript')
+        }))
+        .js
+        .pipe(gulp.dest('build/egb/test/e2e'));
+});
+
+// Runs JavaScript end-to-end tests. Requires that the application and webdriver-manager are running.
+gulp.task('test:e2e', ['test:e2e:build'], function () {
+    var protractor = require('evident-gulp-build/node_modules/gulp-protractor').protractor;
+
+    return gulp.src(["./test/e2e/**/*.spec.js"])
+        .pipe(protractor({
+            configFile: "test/protractor.conf.js"
+        }));
+});

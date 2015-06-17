@@ -25,6 +25,12 @@
     },
     "jasmine/jasmine.d.ts": {
       "commit": "5156f56a6efe779c31cfcc8e54a22b409ed63d77"
+    },
+    "angular-protractor/angular-protractor.d.ts": {
+      "commit": "d268d865a30b0a64a2eff93f80d8167303bacb05"
+    },
+    "selenium-webdriver/selenium-webdriver.d.ts": {
+      "commit": "d268d865a30b0a64a2eff93f80d8167303bacb05"
     }
   }
 }

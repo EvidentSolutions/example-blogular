@@ -7,7 +7,7 @@ exports.config = {
 
     baseUrl: 'http://localhost:8080',
 
-    specs: ['e2e/**/*_spec.js'],
+    specs: ['../build/egb/test/e2e/*.js'],
 
     jasmineNodeOpts: {
         showColors: true,
